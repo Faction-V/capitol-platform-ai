@@ -12,7 +12,5 @@ export async function getOtp(email: string) {
     }),
   });
 
-  const responseData = await response?.json();
-
-  console.log("responseData", responseData);
+  return await response?.json();
 }
