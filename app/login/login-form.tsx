@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getOtp } from "@/app/login/services/get-otp";
 import { validateOtp } from "@/app/login/services/validate-otp";
@@ -7,12 +8,14 @@ export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isOtpVisible, setIsOtpVisible] = useState(false);
+  const router = useRouter();
 
   const buttonLabel = isOtpVisible ? "Log in" : "Get OTP code";
 
   const handleButtonClick = async () => {
     if (isOtpVisible) {
       await validateOtp({ email, code });
+      router.push("/");
     } else {
       await getOtp(email);
       setIsOtpVisible(true);
@@ -30,6 +33,7 @@ export const LoginForm = () => {
         />
       ) : (
         <input
+          name="email"
           value={email}
           placeholder="Email"
           type="email"
