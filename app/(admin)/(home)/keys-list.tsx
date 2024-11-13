@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { RenameModal } from "./rename-modal";
 import { ToastContainer, toast } from "react-toastify";
+import { TrashIcon } from "../../icons/trash-icon";
+import { EditIcon } from "../../icons/edit-icon";
 
 export default function KeysList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,19 +36,27 @@ export default function KeysList() {
           </button>
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
-        <div className="flex bg-white border border-gray-200 rounded-lg shadow justify-between items-center p-2">
-          <div className="flex flex-col justify-between p-4 leading-normal">
-            <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900">
+        <div className="flex bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5">
+          <div className="flex flex-col justify-between leading-normal gap-2">
+            <h5 className="text-lg font-bold tracking-tight text-gray-900">
               Key name
             </h5>
-            <p className="mb-3 font-normal text-gray-700">key</p>
+            <p className="font-normal text-gray-700">key</p>
           </div>
-          <button
-            type="button"
-            className="py-1.5 px-1.5 me-2 mb-2 text-sm font-medium text-red-500 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-red-800 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-100"
-          >
-            Delete
-          </button>
+          <div className="flex gap-2 items-start">
+            <button
+              type="button"
+              className="py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100"
+            >
+              <EditIcon />
+            </button>
+            <button
+              type="button"
+              className="py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100"
+            >
+              <TrashIcon />
+            </button>
+          </div>
         </div>
       </div>
       {isModalOpen && (
