@@ -77,6 +77,7 @@ export const RenameModal = ({
                 New API key
               </button>
               <button
+                onClick={() => setIsModalOpen(false)}
                 type="button"
                 className="px-2.5 py-1.5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
               >
