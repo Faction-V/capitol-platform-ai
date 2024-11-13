@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RenameModal } from "./rename-modal";
+import { NameModal } from "./name-modal";
 import { ToastContainer, toast } from "react-toastify";
 import { TrashIcon } from "../../icons/trash-icon";
 import { EditIcon } from "../../icons/edit-icon";
@@ -60,7 +60,7 @@ export default function KeysList() {
         </div>
       </div>
       {isModalOpen && (
-        <RenameModal setIsModalOpen={setIsModalOpen} notify={notify} />
+        <NameModal setIsModalOpen={setIsModalOpen} notify={notify} />
       )}
     </div>
   );

@@ -4,7 +4,7 @@ interface CreateApiKeysProps {
   name: string;
 }
 
-export async function createApiKeys({ name }: CreateApiKeysProps) {
+export async function createApiKey({ name }: CreateApiKeysProps) {
   const proxy = process.env.CLJ_API_BASE_URL;
   const response = await fetch(`${proxy}/integration/key`, {
     method: "POST",

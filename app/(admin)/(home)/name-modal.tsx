@@ -1,24 +1,30 @@
 import { useState } from "react";
-import { createApiKeys } from "./services/create-api-keys";
+import { createApiKey } from "./services/create-api-key";
 import { KeyIcon } from "../../icons/key-icon";
 
 import "react-toastify/dist/ReactToastify.css";
+
+interface NameModalProps {
+  isEdit?: boolean;
+  setIsModalOpen: (isModalOpen: boolean) => void;
+  notify: () => void;
+}
 
 const isEmptyString = (str: string) => {
   return !str || str.length === 0;
 };
 
-export const RenameModal = ({
+export const NameModal = ({
   setIsModalOpen,
   notify,
-}: {
-  setIsModalOpen: (isModalOpen: boolean) => void;
-  notify: () => void;
-}) => {
+  isEdit = false,
+}: NameModalProps) => {
   const [name, setName] = useState("");
+  const title = isEdit ? "Edit API key" : "Add new API key";
+  const buttonText = isEdit ? "Edit API key" : "New API key";
 
   const handleCreate = async () => {
-    await createApiKeys({ name });
+    await createApiKey({ name });
     notify();
     setIsModalOpen(false);
   };
@@ -44,7 +50,6 @@ export const RenameModal = ({
         className="fixed inset-0 bg-gray-500/75 transition-opacity"
         aria-hidden="true"
       ></div>
-
       <div className="fixed inset-0 z-30 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
@@ -58,7 +63,7 @@ export const RenameModal = ({
                     className="text-base font-semibold text-gray-900"
                     id="modal-title"
                   >
-                    Add new API key
+                    {title}
                   </h3>
                   <hr className="h-px my-3 bg-gray-200 border-0" />
                   <div className="mt-2">
@@ -89,7 +94,7 @@ export const RenameModal = ({
                 type="button"
                 className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-75 disabled:hover:bg-primary-700 disabled:cursor-not-allowed"
               >
-                New API key
+                {buttonText}
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}
