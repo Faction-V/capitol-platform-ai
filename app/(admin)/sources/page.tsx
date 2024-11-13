@@ -3,10 +3,10 @@ import { FileIcon } from "@/app/icons/file-icon";
 
 export default function SourcesPage() {
   return (
-    <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
       <div className="flow-root">
-        <h3 className="text-xl font-semibold dark:text-white">Useful links</h3>
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        <h3 className="text-xl font-semibold">Useful links</h3>
+        <ul className="divide-y divide-gray-200">
           <li className="py-4">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
