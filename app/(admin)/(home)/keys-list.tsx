@@ -2,12 +2,26 @@
 
 import { useState } from "react";
 import { RenameModal } from "./rename-modal";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function KeysList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const notify = () => toast.success("Key was created successfully!");
 
   return (
-    <div className="p-4 mb-4 2xl:col-span-2 sm:p-6">
+    <div className="mb-4 2xl:col-span-2">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold dark:text-white">API keys</h3>
@@ -35,7 +49,9 @@ export default function KeysList() {
           </button>
         </div>
       </div>
-      {isModalOpen && <RenameModal setIsModalOpen={setIsModalOpen} />}
+      {isModalOpen && (
+        <RenameModal setIsModalOpen={setIsModalOpen} notify={notify} />
+      )}
     </div>
   );
 }

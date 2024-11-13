@@ -18,7 +18,7 @@ export default function MainLayout({
 
   return (
     <>
-      <nav className="fixed z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex items-center p-4 gap-2">
+      <nav className="fixed z-30 w-full bg-white border-b border-gray-200 flex items-center p-3 gap-2">
         <CapitolIcon />
         <span className="font-medium text-lg">Capitol Platform</span>
       </nav>
@@ -48,7 +48,7 @@ export default function MainLayout({
           </div>
         </aside>
         <div className="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64">
-          <div className="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 h-full">
+          <div className="grid grid-cols-1 p-6 xl:grid-cols-3 xl:gap-4 h-full">
             {children}
           </div>
         </div>

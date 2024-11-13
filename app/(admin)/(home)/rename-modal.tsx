@@ -2,21 +2,35 @@ import { useState } from "react";
 import { createApiKeys } from "./services/create-api-keys";
 import { KeyIcon } from "../../icons/key-icon";
 
+import "react-toastify/dist/ReactToastify.css";
+
 const isEmptyString = (str: string) => {
   return !str || str.length === 0;
 };
 
 export const RenameModal = ({
   setIsModalOpen,
+  notify,
 }: {
   setIsModalOpen: (isModalOpen: boolean) => void;
+  notify: () => void;
 }) => {
   const [name, setName] = useState("");
 
   const handleCreate = async () => {
-    const response = await createApiKeys({ name });
-    console.log("response", response);
+    await createApiKeys({ name });
+    notify();
     setIsModalOpen(false);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isEmptyString(name)) {
+      return;
+    }
+
+    if (event.key === "Enter") {
+      handleCreate();
+    }
   };
 
   return (
@@ -56,6 +70,7 @@ export const RenameModal = ({
                         Key name
                       </label>
                       <input
+                        onKeyDown={handleKeyDown}
                         onChange={(e) => setName(e.target.value)}
                         value={name}
                         type="text"
