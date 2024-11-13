@@ -1,10 +1,24 @@
+import { useState } from "react";
+import { createApiKeys } from "./services/create-api-keys";
 import { KeyIcon } from "../../icons/key-icon";
+
+const isEmptyString = (str: string) => {
+  return !str || str.length === 0;
+};
 
 export const RenameModal = ({
   setIsModalOpen,
 }: {
   setIsModalOpen: (isModalOpen: boolean) => void;
 }) => {
+  const [name, setName] = useState("");
+
+  const handleCreate = async () => {
+    const response = await createApiKeys({ name });
+    console.log("response", response);
+    setIsModalOpen(false);
+  };
+
   return (
     <div
       className="relative z-30"
@@ -42,9 +56,11 @@ export const RenameModal = ({
                         Key name
                       </label>
                       <input
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
                         type="text"
                         id="title"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       />
                     </div>
                   </div>
@@ -53,9 +69,10 @@ export const RenameModal = ({
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
               <button
-                onClick={() => setIsModalOpen(true)}
+                disabled={isEmptyString(name)}
+                onClick={handleCreate}
                 type="button"
-                className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center"
+                className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-75 disabled:hover:bg-primary-700 disabled:cursor-not-allowed"
               >
                 New API key
               </button>
