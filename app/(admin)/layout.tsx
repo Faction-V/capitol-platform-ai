@@ -47,10 +47,8 @@ export default function MainLayout({
             </div>
           </div>
         </aside>
-        <div className="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64">
-          <div className="grid grid-cols-1 p-6 xl:grid-cols-3 xl:gap-4 h-full">
-            {children}
-          </div>
+        <div className="relative w-full h-full overflow-y-auto bg-gray-50 ml-64">
+          <div className="grid grid-cols-1 p-6 h-full">{children}</div>
         </div>
       </div>
     </>

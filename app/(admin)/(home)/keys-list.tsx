@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { NameModal } from "./name-modal";
+import { EditKeyModal } from "./edit-key-modal";
 import { ToastContainer } from "react-toastify";
 import { KeyItem } from "./key-item";
 import { Key } from "./types";
@@ -14,12 +14,21 @@ export default function KeysList({ keys }: KeysListProps) {
   const [keysList, setKeyList] = useState(keys);
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
 
-  const updateName = ({ id, name }: { id: string; name: string }) => {
+  const editKey = ({
+    id,
+    name,
+    domain,
+  }: {
+    id: string;
+    name: string;
+    domain: string;
+  }) => {
     const updatedKeys = keysList.map((key) => {
       if (key.id === id) {
         return {
           ...key,
           name,
+          domain,
         };
       }
 
@@ -42,7 +51,7 @@ export default function KeysList({ keys }: KeysListProps) {
   };
 
   return (
-    <div className="mb-4 2xl:col-span-2">
+    <div className="mb-4">
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -71,13 +80,13 @@ export default function KeysList({ keys }: KeysListProps) {
           <KeyItem
             key={item?.id}
             {...item}
-            updateName={updateName}
+            editKey={editKey}
             deleteKey={deleteKey}
           />
         ))}
       </div>
       {isNameModalOpen && (
-        <NameModal setIsNameModalOpen={setIsNameModalOpen} addKey={addKey} />
+        <EditKeyModal setIsNameModalOpen={setIsNameModalOpen} addKey={addKey} />
       )}
     </div>
   );

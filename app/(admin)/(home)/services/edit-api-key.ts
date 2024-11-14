@@ -2,15 +2,16 @@
 
 import { cookies } from "next/headers";
 
-interface RenameApiKeyProps {
+interface EditApiKeyProps {
   id: string;
   name: string;
+  domain: string;
 }
 
-export async function renameApiKey({ id, name }: RenameApiKeyProps) {
+export async function editApiKey({ id, name, domain }: EditApiKeyProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/org/key?api-key-id=${id}`, {
+  const response = await fetch(`${proxy}/org/key`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -19,8 +20,8 @@ export async function renameApiKey({ id, name }: RenameApiKeyProps) {
     },
     body: JSON.stringify({
       name: name,
-      "api-key-id": id,
-      domain: "test.capitol.ai",
+      apiKeyId: id,
+      domain: domain,
     }),
   });
 

@@ -4,9 +4,10 @@ import { cookies } from "next/headers";
 
 interface CreateApiKeysProps {
   name: string;
+  domain: string;
 }
 
-export async function createApiKey({ name }: CreateApiKeysProps) {
+export async function createApiKey({ name, domain }: CreateApiKeysProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
   const response = await fetch(`${proxy}/org/key`, {
@@ -17,7 +18,7 @@ export async function createApiKey({ name }: CreateApiKeysProps) {
     },
     body: JSON.stringify({
       name: name,
-      domain: "test.capitol.ai",
+      domain: domain,
       organizationId: "2360ebf5-bc9c-46a4-82db-a1bfad317ea7",
     }),
   });

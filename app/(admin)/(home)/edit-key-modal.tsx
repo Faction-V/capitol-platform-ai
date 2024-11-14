@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { createApiKey } from "./services/create-api-key";
-import { renameApiKey } from "./services/rename-api-key";
+import { editApiKey } from "./services/edit-api-key";
 import { KeyIcon } from "../../icons/key-icon";
 import { Key } from "./types";
 
@@ -11,8 +11,17 @@ interface NameModalProps {
   isEdit?: boolean;
   keyName?: string;
   keyId?: string;
+  keyDomain?: string;
   setIsNameModalOpen: (isModalOpen: boolean) => void;
-  updateName?: ({ id, name }: { id: string; name: string }) => void;
+  editKey?: ({
+    id,
+    name,
+    domain,
+  }: {
+    id: string;
+    name: string;
+    domain: string;
+  }) => void;
   addKey?: (key: Key) => void;
 }
 
@@ -20,20 +29,22 @@ const isEmptyString = (str: string) => {
   return !str || str.length === 0;
 };
 
-export const NameModal = ({
+export const EditKeyModal = ({
   setIsNameModalOpen,
   isEdit = false,
   keyName = "",
+  keyDomain = "",
   keyId = "",
-  updateName,
+  editKey,
   addKey,
 }: NameModalProps) => {
   const [name, setName] = useState(keyName);
+  const [domain, setDomain] = useState(keyDomain);
   const title = isEdit ? "Edit API key" : "Add new API key";
 
   const createKey = async () => {
     try {
-      const result = await createApiKey({ name });
+      const result = await createApiKey({ name, domain });
       addKey && addKey(result);
       toast.success("Key was created successfully");
       console.log("result", result);
@@ -44,8 +55,8 @@ export const NameModal = ({
 
   const renameKey = async () => {
     try {
-      await renameApiKey({ id: keyId, name: name });
-      updateName && updateName({ id: keyId, name });
+      await editApiKey({ id: keyId, name: name, domain });
+      editKey && editKey({ id: keyId, name, domain });
       toast.success("Key was renamed successfully");
     } catch (error) {
       toast.error("Something went wrong while renaming the key");
@@ -62,7 +73,7 @@ export const NameModal = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isEmptyString(name)) {
+    if (isEmptyString(name) || isEmptyString(domain)) {
       return;
     }
 
@@ -99,9 +110,9 @@ export const NameModal = ({
                   </h3>
                   <hr className="h-px my-3 bg-gray-200 border-0" />
                   <div className="mt-2">
-                    <div>
+                    <div className="mb-3">
                       <label
-                        htmlFor="title"
+                        htmlFor="name"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
                         Key name
@@ -111,7 +122,23 @@ export const NameModal = ({
                         onChange={(e) => setName(e.target.value)}
                         value={name}
                         type="text"
-                        id="title"
+                        id="name"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="title"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Domain
+                      </label>
+                      <input
+                        onKeyDown={handleKeyDown}
+                        onChange={(e) => setDomain(e.target.value)}
+                        value={domain}
+                        type="text"
+                        id="domain"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       />
                     </div>
