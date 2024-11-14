@@ -2,13 +2,18 @@ import { useState } from "react";
 import { createApiKey } from "./services/create-api-key";
 import { renameApiKey } from "./services/rename-api-key";
 import { KeyIcon } from "../../icons/key-icon";
+import { Key } from "./types";
 
 import "react-toastify/dist/ReactToastify.css";
 
 interface NameModalProps {
   isEdit?: boolean;
-  setIsModalOpen: (isModalOpen: boolean) => void;
+  keyName?: string;
+  keyId?: string;
+  setIsNameModalOpen: (isModalOpen: boolean) => void;
   notify: () => void;
+  updateName?: ({ id, name }: { id: string; name: string }) => void;
+  addKey?: (key: Key) => void;
 }
 
 const isEmptyString = (str: string) => {
@@ -16,23 +21,28 @@ const isEmptyString = (str: string) => {
 };
 
 export const NameModal = ({
-  setIsModalOpen,
+  setIsNameModalOpen,
   notify,
   isEdit = false,
+  keyName = "",
+  keyId = "",
+  updateName,
+  addKey,
 }: NameModalProps) => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(keyName);
   const title = isEdit ? "Edit API key" : "Add new API key";
-  const buttonText = isEdit ? "Edit API key" : "New API key";
 
   const handleCreate = async () => {
     if (isEdit) {
-      await renameApiKey({ id: "id" });
+      await renameApiKey({ id: keyId, name: name });
+      updateName && updateName({ id: keyId, name });
     } else {
-      await createApiKey({ name });
+      const result = await createApiKey({ name });
+      addKey && addKey(result);
     }
 
     notify();
-    setIsModalOpen(false);
+    setIsNameModalOpen(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -100,10 +110,10 @@ export const NameModal = ({
                 type="button"
                 className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-75 disabled:hover:bg-primary-700 disabled:cursor-not-allowed"
               >
-                {buttonText}
+                Save
               </button>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsNameModalOpen(false)}
                 type="button"
                 className="px-2.5 py-1.5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
               >

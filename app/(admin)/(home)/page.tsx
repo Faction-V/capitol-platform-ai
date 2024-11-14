@@ -5,5 +5,5 @@ export default async function HomePage() {
   const result = await getAllApiKeys();
   console.log("result", result);
 
-  return <KeysList />;
+  return <KeysList keys={result} />;
 }

@@ -9,7 +9,7 @@ interface CreateApiKeysProps {
 export async function createApiKey({ name }: CreateApiKeysProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/integration/key`, {
+  const response = await fetch(`${proxy}/org/key`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +17,8 @@ export async function createApiKey({ name }: CreateApiKeysProps) {
     },
     body: JSON.stringify({
       name: name,
-      domain: "capitol-client.com",
+      domain: "test.capitol.ai",
+      organizationId: "2360ebf5-bc9c-46a4-82db-a1bfad317ea7",
     }),
   });
 
