@@ -60,7 +60,6 @@ export default function KeysList({ keys }: KeysListProps) {
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
-        draggable
         pauseOnHover
         theme="light"
       />
@@ -76,6 +75,11 @@ export default function KeysList({ keys }: KeysListProps) {
           </button>
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
+        {keysList.length === 0 && (
+          <p className="text-gray-500">
+            There are no API keys associated with your account.
+          </p>
+        )}
         {keysList.map((item) => (
           <KeyItem
             key={item?.id}

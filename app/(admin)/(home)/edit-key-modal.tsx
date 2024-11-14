@@ -45,7 +45,9 @@ export const EditKeyModal = ({
   const createKey = async () => {
     try {
       const result = await createApiKey({ name, domain });
-      addKey && addKey(result);
+      if (addKey) {
+        addKey(result);
+      }
       toast.success("Key was created successfully");
       console.log("result", result);
     } catch (error) {
@@ -56,10 +58,12 @@ export const EditKeyModal = ({
   const renameKey = async () => {
     try {
       await editApiKey({ id: keyId, name: name, domain });
-      editKey && editKey({ id: keyId, name, domain });
+      if (editKey) {
+        editKey({ id: keyId, name, domain });
+      }
       toast.success("Key was renamed successfully");
     } catch (error) {
-      toast.error("Something went wrong while renaming the key");
+      toast.error((error as Error).message);
     }
   };
 
