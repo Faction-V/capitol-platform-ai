@@ -22,5 +22,9 @@ export async function createApiKey({ name }: CreateApiKeysProps) {
     }),
   });
 
+  if (!response.ok) {
+    throw new Error("Failed to create api key");
+  }
+
   return await response?.json();
 }

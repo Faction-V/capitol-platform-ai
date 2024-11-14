@@ -24,5 +24,9 @@ export async function renameApiKey({ id, name }: RenameApiKeyProps) {
     }),
   });
 
+  if (!response.ok) {
+    throw new Error("Failed to rename the api key");
+  }
+
   return await response?.json();
 }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { NameModal } from "./name-modal";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { KeyItem } from "./key-item";
 import { Key } from "./types";
 
@@ -13,7 +13,6 @@ interface KeysListProps {
 export default function KeysList({ keys }: KeysListProps) {
   const [keysList, setKeyList] = useState(keys);
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
-  const notify = () => toast.success("Key was created successfully!");
 
   const updateName = ({ id, name }: { id: string; name: string }) => {
     const updatedKeys = keysList.map((key) => {
@@ -78,11 +77,7 @@ export default function KeysList({ keys }: KeysListProps) {
         ))}
       </div>
       {isNameModalOpen && (
-        <NameModal
-          setIsNameModalOpen={setIsNameModalOpen}
-          notify={notify}
-          addKey={addKey}
-        />
+        <NameModal setIsNameModalOpen={setIsNameModalOpen} addKey={addKey} />
       )}
     </div>
   );

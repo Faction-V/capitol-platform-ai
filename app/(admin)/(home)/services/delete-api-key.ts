@@ -18,5 +18,9 @@ export async function deleteApiKey({ id }: DeleteApiKeyProps) {
     },
   });
 
+  if (!response.ok) {
+    throw new Error("Failed to delete the api key");
+  }
+
   return await response?.json();
 }

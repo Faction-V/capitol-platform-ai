@@ -17,5 +17,9 @@ export async function getAllApiKeys() {
     },
   );
 
+  if (!response.ok) {
+    throw new Error("Failed to get the list of api keys");
+  }
+
   return await response?.json();
 }

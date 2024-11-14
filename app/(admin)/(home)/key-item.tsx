@@ -6,6 +6,7 @@ import { NameModal } from "./name-modal";
 import { ConfirmationModal } from "./confirmation-modal";
 import { Key } from "./types";
 import { deleteApiKey } from "./services/delete-api-key";
+import { createApiKey } from "./services/create-api-key";
 
 interface KeyItemProps extends Key {
   deleteKey: (id: string) => void;
@@ -21,11 +22,15 @@ export const KeyItem = ({
 }: KeyItemProps) => {
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const notify = () => toast.success("Key was renamed successfully!");
 
   const handleDelete = async () => {
-    await deleteApiKey({ id });
-    deleteKey(id);
+    try {
+      await deleteApiKey({ id });
+      deleteKey(id);
+      toast.success("Key was deleted successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
 
   return (
@@ -59,7 +64,6 @@ export const KeyItem = ({
       {isNameModalOpen && (
         <NameModal
           setIsNameModalOpen={setIsNameModalOpen}
-          notify={notify}
           isEdit
           keyName={name}
           keyId={id}

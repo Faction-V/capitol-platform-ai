@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { createApiKey } from "./services/create-api-key";
 import { renameApiKey } from "./services/rename-api-key";
 import { KeyIcon } from "../../icons/key-icon";
@@ -11,7 +12,6 @@ interface NameModalProps {
   keyName?: string;
   keyId?: string;
   setIsNameModalOpen: (isModalOpen: boolean) => void;
-  notify: () => void;
   updateName?: ({ id, name }: { id: string; name: string }) => void;
   addKey?: (key: Key) => void;
 }
@@ -22,7 +22,6 @@ const isEmptyString = (str: string) => {
 
 export const NameModal = ({
   setIsNameModalOpen,
-  notify,
   isEdit = false,
   keyName = "",
   keyId = "",
@@ -32,16 +31,33 @@ export const NameModal = ({
   const [name, setName] = useState(keyName);
   const title = isEdit ? "Edit API key" : "Add new API key";
 
-  const handleCreate = async () => {
-    if (isEdit) {
-      await renameApiKey({ id: keyId, name: name });
-      updateName && updateName({ id: keyId, name });
-    } else {
+  const createKey = async () => {
+    try {
       const result = await createApiKey({ name });
       addKey && addKey(result);
+      toast.success("Key was created successfully");
+      console.log("result", result);
+    } catch (error) {
+      toast.error((error as Error).message);
     }
+  };
 
-    notify();
+  const renameKey = async () => {
+    try {
+      await renameApiKey({ id: keyId, name: name });
+      updateName && updateName({ id: keyId, name });
+      toast.success("Key was renamed successfully");
+    } catch (error) {
+      toast.error("Something went wrong while renaming the key");
+    }
+  };
+
+  const handleSave = async () => {
+    if (isEdit) {
+      await renameKey();
+    } else {
+      await createKey();
+    }
     setIsNameModalOpen(false);
   };
 
@@ -51,7 +67,7 @@ export const NameModal = ({
     }
 
     if (event.key === "Enter") {
-      handleCreate();
+      handleSave();
     }
   };
 
@@ -106,7 +122,7 @@ export const NameModal = ({
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
               <button
                 disabled={isEmptyString(name)}
-                onClick={handleCreate}
+                onClick={handleSave}
                 type="button"
                 className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-75 disabled:hover:bg-primary-700 disabled:cursor-not-allowed"
               >
