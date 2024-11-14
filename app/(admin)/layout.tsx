@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CapitolIcon } from "@/app/icons/capitol-icon";
+import { ExternalLinkIcon } from "../icons/external-link-icon";
 
 export default function MainLayout({
   children,
@@ -35,15 +36,36 @@ export default function MainLayout({
                 API keys
               </Link>
               <Link
-                href="/sources"
+                href="/users"
                 className={
-                  pathname === "/sources"
+                  pathname === "/users"
                     ? selectedLinkClassNames
                     : linkClassNames
                 }
               >
-                Links to sources
+                Users
               </Link>
+
+              <a
+                rel="noopener noreferrer"
+                href="https://api.capitol.ai/"
+                target="_blank"
+                className={linkClassNames}
+              >
+                <span className="gap-1 flex">
+                  API docs <ExternalLinkIcon size={12} />
+                </span>
+              </a>
+              <a
+                rel="noopener noreferrer"
+                href="https://www.npmjs.com/package/@capitol.ai/react"
+                target="_blank"
+                className={linkClassNames}
+              >
+                <span className="gap-1 flex">
+                  NPM package <ExternalLinkIcon size={12} />
+                </span>
+              </a>
             </div>
           </div>
         </aside>

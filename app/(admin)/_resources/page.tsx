@@ -1,7 +1,7 @@
 import { NpmIcon } from "@/app/icons/npm-icon";
 import { FileIcon } from "@/app/icons/file-icon";
 
-export default function SourcesPage() {
+export default function ResourcesPage() {
   return (
     <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
       <div className="flow-root">
