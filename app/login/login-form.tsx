@@ -22,6 +22,12 @@ export const LoginForm = () => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleButtonClick();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {isOtpVisible ? (
@@ -29,6 +35,7 @@ export const LoginForm = () => {
           value={code}
           placeholder="Code"
           onChange={(e) => setCode(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5"
         />
       ) : (
@@ -38,6 +45,7 @@ export const LoginForm = () => {
           placeholder="Email"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5"
         />
       )}
