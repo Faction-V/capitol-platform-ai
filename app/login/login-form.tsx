@@ -14,9 +14,17 @@ export const LoginForm = () => {
 
   const handleButtonClick = async () => {
     if (isOtpVisible) {
+      if (!email || !code) {
+        return;
+      }
+
       await validateOtp({ email, code });
       router.push("/");
     } else {
+      if (!email) {
+        return;
+      }
+
       await getOtp(email);
       setIsOtpVisible(true);
     }
