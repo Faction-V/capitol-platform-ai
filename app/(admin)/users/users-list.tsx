@@ -6,6 +6,8 @@ import { UserItem } from "@/app/(admin)/users/user-item";
 
 export default function UsersList() {
   const [isAddAddUserModalOpen, setAddAddUserModalOpen] = useState(false);
+  console.log("isAddAddUserModalOpen", isAddAddUserModalOpen);
+
   return (
     <div className="mb-4">
       <ToastContainer
