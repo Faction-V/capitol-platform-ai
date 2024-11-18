@@ -32,7 +32,9 @@ export default function UsersList() {
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         <div>
-          <UserItem />
+          <UserItem lastName="Tub" firstName="Elen" />
+          <UserItem lastName="Sub" firstName="Elen" />
+          <UserItem lastName="wub" firstName="Elen" />
         </div>
       </div>
     </div>
