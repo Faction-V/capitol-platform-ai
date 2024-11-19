@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { UserItem } from "@/app/(admin)/users/user-item";
+import { MemberItem } from "./member-item";
 import { Button } from "@/app/components/button";
+import { AddMemberModal } from "./add-member-modal";
 
-export default function UsersList() {
+export default function MembersList() {
   const [isAddAddUserModalOpen, setAddAddUserModalOpen] = useState(false);
-  console.log("isAddAddUserModalOpen", isAddAddUserModalOpen);
 
   return (
     <div className="mb-4">
@@ -32,11 +32,14 @@ export default function UsersList() {
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         <div>
-          <UserItem lastName="Tub" firstName="Elen" />
-          <UserItem lastName="Sub" firstName="Elen" />
-          <UserItem lastName="wub" firstName="Elen" />
+          <MemberItem lastName="Tub" firstName="Elen" />
+          <MemberItem lastName="Sub" firstName="Elen" />
+          <MemberItem lastName="wub" firstName="Elen" />
         </div>
       </div>
+      {isAddAddUserModalOpen && (
+        <AddMemberModal setAddAddUserModalOpen={setAddAddUserModalOpen} />
+      )}
     </div>
   );
 }

@@ -36,9 +36,9 @@ export default function MainLayout({
                 API keys
               </Link>
               <Link
-                href="/users"
+                href="/members"
                 className={
-                  pathname === "/users"
+                  pathname === "/members"
                     ? selectedLinkClassNames
                     : linkClassNames
                 }

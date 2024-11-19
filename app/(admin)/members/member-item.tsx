@@ -36,7 +36,7 @@ const colors: { [index: string]: string } = {
   z: "bg-amber-300 text-amber-950",
 };
 
-export const UserItem = ({
+export const MemberItem = ({
   firstName = "Masha",
   lastName = "Mal",
 }: UserItemProps) => {
