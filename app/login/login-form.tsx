@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getOtp } from "@/app/login/services/get-otp";
 import { validateOtp } from "@/app/login/services/validate-otp";
+import { Input } from "@/app/components/input";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -39,22 +40,20 @@ export const LoginForm = () => {
   return (
     <div className="flex flex-col gap-4">
       {isOtpVisible ? (
-        <input
+        <Input
           value={code}
           placeholder="Code"
-          onChange={(e) => setCode(e.target.value)}
+          onChange={(value: string) => setCode(value)}
           onKeyDown={handleKeyDown}
-          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5"
         />
       ) : (
-        <input
+        <Input
           name="email"
           value={email}
           placeholder="Email"
           type="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(value: string) => setEmail(value)}
           onKeyDown={handleKeyDown}
-          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5"
         />
       )}
       <button

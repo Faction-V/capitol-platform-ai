@@ -6,6 +6,7 @@ import { KeyIcon } from "../../icons/key-icon";
 import { Key } from "./types";
 
 import "react-toastify/dist/ReactToastify.css";
+import { Input } from "@/app/components/input";
 
 interface NameModalProps {
   isEdit?: boolean;
@@ -121,13 +122,12 @@ export const EditKeyModal = ({
                       >
                         Key name
                       </label>
-                      <input
+                      <Input
+                        onChange={(value: string) => setName(value)}
                         onKeyDown={handleKeyDown}
-                        onChange={(e) => setName(e.target.value)}
                         value={name}
                         type="text"
                         id="name"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       />
                     </div>
                     <div>
@@ -137,13 +137,12 @@ export const EditKeyModal = ({
                       >
                         Domain
                       </label>
-                      <input
+                      <Input
+                        onChange={(value: string) => setDomain(value)}
                         onKeyDown={handleKeyDown}
-                        onChange={(e) => setDomain(e.target.value)}
                         value={domain}
                         type="text"
                         id="domain"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                       />
                     </div>
                   </div>
