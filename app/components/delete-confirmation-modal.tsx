@@ -1,17 +1,23 @@
 import "react-toastify/dist/ReactToastify.css";
-import { TrashIcon } from "../../icons/trash-icon";
-import { Button } from "@/app/components/button";
-import { Modal } from "@/app/components/modal";
+import { TrashIcon } from "../icons/trash-icon";
+import { Button } from "./button";
+import { Modal } from "./modal";
 
-interface ConfirmationModalProps {
-  setIsConfirmationModalOpen: (isModalOpen: boolean) => void;
+interface DeleteConfirmationModalProps {
+  title: string;
+  description: string;
+  buttonLabel: string;
   handleDelete: () => void;
+  handleCancel: () => void;
 }
 
-export const ConfirmationModal = ({
-  setIsConfirmationModalOpen,
+export const DeleteConfirmationModal = ({
   handleDelete,
-}: ConfirmationModalProps) => {
+  title,
+  description,
+  handleCancel,
+  buttonLabel,
+}: DeleteConfirmationModalProps) => {
   return (
     <Modal>
       <div className="bg-white px-4 pb-4 pt-5">
@@ -24,25 +30,18 @@ export const ConfirmationModal = ({
               className="text-base font-semibold text-gray-900"
               id="modal-title"
             >
-              Delete API key
+              {title}
             </h3>
             <hr className="h-px my-3 bg-gray-200 border-0" />
             <div className="mt-2">
-              <p className="text-sm text-gray-500">
-                Are you sure you want to delete the key? This action cannot be
-                undone.
-              </p>
+              <p className="text-sm text-gray-500">{description}</p>
             </div>
           </div>
         </div>
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-        <Button label="Delete key" onClick={handleDelete} />
-        <Button
-          label="Cancel"
-          onClick={() => setIsConfirmationModalOpen(false)}
-          type="secondary"
-        />
+        <Button label={buttonLabel} onClick={handleDelete} />
+        <Button label="Cancel" onClick={handleCancel} type="secondary" />
       </div>
     </Modal>
   );

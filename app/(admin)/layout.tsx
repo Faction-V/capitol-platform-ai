@@ -43,7 +43,7 @@ export default function MainLayout({
                     : linkClassNames
                 }
               >
-                Users
+                Members
               </Link>
 
               <a

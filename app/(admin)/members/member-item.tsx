@@ -1,7 +1,10 @@
-import { EditIcon } from "@/app/icons/edit-icon";
+import { useState } from "react";
 import { TrashIcon } from "@/app/icons/trash-icon";
 import { Button } from "@/app/components/button";
 import { Member } from "./types";
+import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
+import { toast } from "react-toastify";
+import { removeMember } from "./service/remove-member";
 
 const colors: { [index: string]: string } = {
   a: "bg-red-300 text-red-950",
@@ -32,10 +35,32 @@ const colors: { [index: string]: string } = {
   z: "bg-amber-300 text-amber-950",
 };
 
-export const MemberItem = ({ fullName = "", role, email }: Member) => {
+interface MemberItemProps extends Member {
+  updateMembersAfterRemove: (id: string) => void;
+}
+
+export const MemberItem = ({
+  fullName = "",
+  role,
+  email,
+  id,
+  updateMembersAfterRemove,
+}: MemberItemProps) => {
   const [firstName, lastName] = fullName.trim().split(/\s+/);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const colorClassname = colors[lastName[0].toLowerCase()];
+
+  const handleDelete = async () => {
+    try {
+      await removeMember({ id });
+      updateMembersAfterRemove(id);
+      toast.success("Member was removed from organization successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+    setIsConfirmationModalOpen(false);
+  };
 
   return (
     <div className="flex bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2">
@@ -54,11 +79,27 @@ export const MemberItem = ({ fullName = "", role, email }: Member) => {
           <p className="font-normal text-sm text-gray-700">{role}</p>
         </div>
       </div>
+      {role !== "owner" && (
+        <div className="flex items-start">
+          <Button
+            label={<TrashIcon />}
+            type="secondary"
+            onClick={() => {
+              setIsConfirmationModalOpen(true);
+            }}
+          />
+        </div>
+      )}
 
-      <div className="flex gap-2 items-start">
-        <Button label={<EditIcon />} type="secondary" onClick={() => {}} />
-        <Button label={<TrashIcon />} type="secondary" onClick={() => {}} />
-      </div>
+      {isConfirmationModalOpen && (
+        <DeleteConfirmationModal
+          title="Remove member from organization"
+          description="Are you sure you want to remove this member from the organization?"
+          buttonLabel="Remove member"
+          handleDelete={handleDelete}
+          handleCancel={() => setIsConfirmationModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

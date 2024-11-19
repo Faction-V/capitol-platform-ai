@@ -8,7 +8,13 @@ import { AddMemberModal } from "./add-member-modal";
 import { Member } from "./types";
 
 export default function MembersList({ members }: { members: Member[] }) {
+  const [membersList, setMembersList] = useState(members);
   const [isAddAddUserModalOpen, setAddAddUserModalOpen] = useState(false);
+
+  const updateMembersAfterRemove = (id: string) => {
+    const filteredMembers = membersList.filter((member) => member.id !== id);
+    setMembersList(filteredMembers);
+  };
 
   return (
     <div className="mb-4">
@@ -25,16 +31,20 @@ export default function MembersList({ members }: { members: Member[] }) {
       />
       <div className="flow-root">
         <div className="flex justify-between">
-          <h3 className="text-xl font-semibold dark:text-white">Users</h3>
+          <h3 className="text-xl font-semibold dark:text-white">Members</h3>
           <Button
-            label="Add user"
+            label="Add member"
             onClick={() => setAddAddUserModalOpen(true)}
           />
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         <div>
-          {members.map((member: Member) => (
-            <MemberItem key={member.id} {...member} />
+          {membersList.map((member: Member) => (
+            <MemberItem
+              key={member.id}
+              {...member}
+              updateMembersAfterRemove={updateMembersAfterRemove}
+            />
           ))}
         </div>
       </div>

@@ -55,7 +55,7 @@ export const AddMemberModal = ({
               className="text-base font-semibold text-gray-900"
               id="modal-title"
             >
-              Add user
+              Add member
             </h3>
             <hr className="h-px my-3 bg-gray-200 border-0" />
             <div className="mt-2">
