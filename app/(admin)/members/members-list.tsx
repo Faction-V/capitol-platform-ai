@@ -5,8 +5,9 @@ import { ToastContainer } from "react-toastify";
 import { MemberItem } from "./member-item";
 import { Button } from "@/app/components/button";
 import { AddMemberModal } from "./add-member-modal";
+import { Member } from "./types";
 
-export default function MembersList() {
+export default function MembersList({ members }: { members: Member[] }) {
   const [isAddAddUserModalOpen, setAddAddUserModalOpen] = useState(false);
 
   return (
@@ -32,9 +33,9 @@ export default function MembersList() {
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         <div>
-          <MemberItem lastName="Tub" firstName="Elen" />
-          <MemberItem lastName="Sub" firstName="Elen" />
-          <MemberItem lastName="wub" firstName="Elen" />
+          {members.map((member: Member) => (
+            <MemberItem key={member.id} {...member} />
+          ))}
         </div>
       </div>
       {isAddAddUserModalOpen && (

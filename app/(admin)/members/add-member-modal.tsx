@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Input } from "../../components/input";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
 import { UserPlusIcon } from "../../icons/user-plus-icon";
 import { isStringEmpty } from "../../utils/is-string-empty";
 import { sendInvite } from "./service/send-invite";
+import "react-toastify/dist/ReactToastify.css";
 
 interface AddUserModalProps {
   setAddAddUserModalOpen: (isModalOpen: boolean) => void;
@@ -16,21 +18,19 @@ export const AddMemberModal = ({
   const [email, setEmail] = useState("");
 
   const handleSendInvite = async () => {
-    const response = await sendInvite({ email });
-    // const response = await fetch(
-    //   `http://a1ab86825a553444a99225e96a91e174-1009329405.us-east-1.elb.amazonaws.com/api/v1/org/member/invite`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       //Cookie: cookieStore.toString(),
-    //     },
-    //     body: JSON.stringify({
-    //       email,
-    //     }),
-    //   },
-    // );
-    console.log("response", response);
+    try {
+      const response = await sendInvite({ email });
+
+      if (response?.code === "invitation-sent") {
+        toast.success(response?.message);
+      } else {
+        toast.warning(response?.message);
+      }
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+
+    setAddAddUserModalOpen(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

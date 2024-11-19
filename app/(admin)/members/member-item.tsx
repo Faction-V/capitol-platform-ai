@@ -1,11 +1,7 @@
 import { EditIcon } from "@/app/icons/edit-icon";
 import { TrashIcon } from "@/app/icons/trash-icon";
 import { Button } from "@/app/components/button";
-
-interface UserItemProps {
-  firstName: string;
-  lastName: string;
-}
+import { Member } from "./types";
 
 const colors: { [index: string]: string } = {
   a: "bg-red-300 text-red-950",
@@ -36,10 +32,9 @@ const colors: { [index: string]: string } = {
   z: "bg-amber-300 text-amber-950",
 };
 
-export const MemberItem = ({
-  firstName = "Masha",
-  lastName = "Mal",
-}: UserItemProps) => {
+export const MemberItem = ({ fullName = "", role, email }: Member) => {
+  const [firstName, lastName] = fullName.trim().split(/\s+/);
+
   const colorClassname = colors[lastName[0].toLowerCase()];
 
   return (
@@ -55,7 +50,8 @@ export const MemberItem = ({
           <h5 className="font-bold tracking-tight text-gray-900">
             {firstName} {lastName}
           </h5>
-          <p className="font-normal text-gray-700">Role</p>
+          <p className="font-normal text-gray-700 underline">{email}</p>
+          <p className="font-normal text-sm text-gray-700">{role}</p>
         </div>
       </div>
 
