@@ -1,5 +1,6 @@
 import { EditIcon } from "@/app/icons/edit-icon";
 import { TrashIcon } from "@/app/icons/trash-icon";
+import { Button } from "@/app/components/button";
 
 interface UserItemProps {
   firstName: string;
@@ -59,20 +60,8 @@ export const UserItem = ({
       </div>
 
       <div className="flex gap-2 items-start">
-        <button
-          onClick={() => {}}
-          type="button"
-          className="py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        >
-          <EditIcon />
-        </button>
-        <button
-          onClick={() => {}}
-          type="button"
-          className="py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        >
-          <TrashIcon />
-        </button>
+        <Button label={<EditIcon />} type="secondary" onClick={() => {}} />
+        <Button label={<TrashIcon />} type="secondary" onClick={() => {}} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { Key } from "./types";
 
 import "react-toastify/dist/ReactToastify.css";
 import { Input } from "@/app/components/input";
+import { Button } from "@/app/components/button";
 
 interface NameModalProps {
   isEdit?: boolean;
@@ -150,21 +151,16 @@ export const EditKeyModal = ({
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-              <button
+              <Button
                 disabled={isEmptyString(name)}
+                label="Save"
                 onClick={handleSave}
-                type="button"
-                className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-75 disabled:hover:bg-primary-700 disabled:cursor-not-allowed"
-              >
-                Save
-              </button>
-              <button
+              />
+              <Button
+                type="secondary"
+                label="Cancel"
                 onClick={() => setIsNameModalOpen(false)}
-                type="button"
-                className="px-2.5 py-1.5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-              >
-                Cancel
-              </button>
+              />
             </div>
           </div>
         </div>

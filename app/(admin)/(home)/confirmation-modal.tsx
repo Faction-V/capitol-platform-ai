@@ -1,5 +1,6 @@
 import "react-toastify/dist/ReactToastify.css";
 import { TrashIcon } from "../../icons/trash-icon";
+import { Button } from "@/app/components/button";
 
 interface ConfirmationModalProps {
   setIsConfirmationModalOpen: (isModalOpen: boolean) => void;
@@ -47,20 +48,12 @@ export const ConfirmationModal = ({
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-              <button
-                onClick={handleDelete}
-                type="button"
-                className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-75 disabled:hover:bg-primary-700 disabled:cursor-not-allowed"
-              >
-                Delete key
-              </button>
-              <button
+              <Button label="Delete key" onClick={handleDelete} />
+              <Button
+                label="Cancel"
                 onClick={() => setIsConfirmationModalOpen(false)}
-                type="button"
-                className="px-2.5 py-1.5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-              >
-                Cancel
-              </button>
+                type="secondary"
+              />
             </div>
           </div>
         </div>

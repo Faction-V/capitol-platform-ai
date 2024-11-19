@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getOtp } from "@/app/login/services/get-otp";
 import { validateOtp } from "@/app/login/services/validate-otp";
 import { Input } from "@/app/components/input";
+import { Button } from "@/app/components/button";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -56,12 +57,7 @@ export const LoginForm = () => {
           onKeyDown={handleKeyDown}
         />
       )}
-      <button
-        onClick={handleButtonClick}
-        className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-      >
-        {buttonLabel}
-      </button>
+      <Button label={buttonLabel} onClick={handleButtonClick} />
     </div>
   );
 };
