@@ -40,13 +40,13 @@ interface MemberItemProps extends Member {
 }
 
 export const MemberItem = ({
-  fullName = "",
+  fullName = "ter we",
   role,
   email,
   id,
   updateMembersAfterRemove,
 }: MemberItemProps) => {
-  const [firstName, lastName] = fullName.trim().split(/\s+/);
+  const [firstName, lastName] = "fewfwef dfwedw".trim().split(/\s+/);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const colorClassname = colors[lastName[0].toLowerCase()];

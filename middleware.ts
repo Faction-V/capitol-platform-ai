@@ -26,7 +26,8 @@ export async function middleware(request: NextRequest) {
 
     const member = await result.json();
 
-    // If the member is authenticated, continue as normal
+    console.log("member", member);
+
     if (!member.error) {
       return NextResponse.redirect(new URL("/new-member", request.url));
     }
@@ -59,6 +60,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public|new-member).*)",
   ],
 };
