@@ -26,6 +26,8 @@ export async function middleware(request: NextRequest) {
 
     const member = await result.json();
 
+    cookieStore.set(member?.cookieName, member?.cookie);
+
     if (!member.error) {
       return NextResponse.redirect(new URL("/new-member", request.url));
     }
