@@ -26,8 +26,6 @@ export async function middleware(request: NextRequest) {
 
     const member = await result.json();
 
-    console.log("member", member);
-
     if (!member.error) {
       return NextResponse.redirect(new URL("/new-member", request.url));
     }
