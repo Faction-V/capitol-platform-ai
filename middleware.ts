@@ -29,6 +29,7 @@ export async function middleware(request: NextRequest) {
     if (member?.cookieName && member?.cookie) {
       cookieStore.set(member?.cookieName, member?.cookie);
     }
+    console.log("member", member);
 
     if (!member.error) {
       return NextResponse.redirect(new URL("/new-member", request.url));
@@ -44,6 +45,7 @@ export async function middleware(request: NextRequest) {
   });
 
   const user = await data.json();
+  console.log(user);
 
   // If the user is authenticated, continue as normal
   if (!user.error) {
@@ -62,6 +64,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public|new-member).*)",
   ],
 };
