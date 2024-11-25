@@ -49,7 +49,6 @@ export const EditKeyModal = ({
         addKey(result);
       }
       toast.success("Key was created successfully");
-      console.log("result", result);
     } catch (error) {
       toast.error((error as Error).message);
     }

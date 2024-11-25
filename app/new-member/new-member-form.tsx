@@ -16,7 +16,8 @@ export const NewMemberForm = () => {
 
   const handleSave = async () => {
     try {
-      await updateMember({ lastName, firstName });
+      const response = await updateMember({ lastName, firstName });
+      //console.log("response", response);
       router.push("/");
     } catch (error) {
       toast.error((error as Error).message);

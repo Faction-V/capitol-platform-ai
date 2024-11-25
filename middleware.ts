@@ -26,7 +26,9 @@ export async function middleware(request: NextRequest) {
 
     const member = await result.json();
 
-    cookieStore.set(member?.cookieName, member?.cookie);
+    if (member?.cookieName && member?.cookie) {
+      cookieStore.set(member?.cookieName, member?.cookie);
+    }
 
     if (!member.error) {
       return NextResponse.redirect(new URL("/new-member", request.url));
@@ -60,6 +62,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public|new-member).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public).*)",
   ],
 };
