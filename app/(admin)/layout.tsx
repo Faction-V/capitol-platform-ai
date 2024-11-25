@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CapitolIcon } from "@/app/icons/capitol-icon";
 import { ExternalLinkIcon } from "../icons/external-link-icon";
+import { Button } from "../components/button";
+import { signOut } from "../services/sign-out";
 
 export default function MainLayout({
   children,
@@ -12,6 +14,10 @@ export default function MainLayout({
 }>) {
   const pathname = usePathname();
 
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   const linkClassNames =
     "flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700";
   const selectedLinkClassNames =
@@ -19,9 +25,14 @@ export default function MainLayout({
 
   return (
     <>
-      <nav className="fixed z-30 w-full bg-white border-b border-gray-200 flex items-center p-3 gap-2">
-        <CapitolIcon />
-        <span className="font-medium text-lg">Capitol Platform</span>
+      <nav className="fixed z-30 w-full bg-white border-b border-gray-200 flex items-center p-3 justify-between">
+        <div className="flex gap-2 items-center">
+          <CapitolIcon />
+          <span className="font-medium text-lg">Capitol Platform</span>
+        </div>
+        <div>
+          <Button label="Logout" onClick={handleSignOut} type="secondary" />
+        </div>
       </nav>
       <div className="flex pt-16 overflow-hidden bg-gray-50 h-full">
         <aside className="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 transition-width">
@@ -36,14 +47,14 @@ export default function MainLayout({
                 API keys
               </Link>
               <Link
-                href="/users"
+                href="/members"
                 className={
-                  pathname === "/users"
+                  pathname === "/members"
                     ? selectedLinkClassNames
                     : linkClassNames
                 }
               >
-                Users
+                Members
               </Link>
 
               <a

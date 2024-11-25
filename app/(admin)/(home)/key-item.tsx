@@ -3,9 +3,10 @@ import { toast } from "react-toastify";
 import { EditIcon } from "../../icons/edit-icon";
 import { TrashIcon } from "../../icons/trash-icon";
 import { EditKeyModal } from "./edit-key-modal";
-import { ConfirmationModal } from "./confirmation-modal";
+import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
 import { Key } from "./types";
 import { deleteApiKey } from "./services/delete-api-key";
+import { Button } from "@/app/components/button";
 
 interface KeyItemProps extends Key {
   deleteKey: (id: string) => void;
@@ -50,26 +51,25 @@ export const KeyItem = ({
           <span className="text-sm text-gray-700">{domain}</span>
         </div>
         <div className="flex gap-2 items-start">
-          <button
+          <Button
+            label={<EditIcon />}
+            type="secondary"
             onClick={() => setIsNameModalOpen(true)}
-            type="button"
-            className="py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100"
-          >
-            <EditIcon />
-          </button>
-          <button
+          />
+          <Button
+            label={<TrashIcon />}
+            type="secondary"
             onClick={() => setIsConfirmationModalOpen(true)}
-            type="button"
-            className="py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100"
-          >
-            <TrashIcon />
-          </button>
+          />
         </div>
       </div>
       {isConfirmationModalOpen && (
-        <ConfirmationModal
+        <DeleteConfirmationModal
+          title="Delete API key"
+          description="Are you sure you want to delete the key? This action cannot be undone."
+          buttonLabel="Delete key"
           handleDelete={handleDelete}
-          setIsConfirmationModalOpen={setIsConfirmationModalOpen}
+          handleCancel={() => setIsConfirmationModalOpen(false)}
         />
       )}
       {isNameModalOpen && (

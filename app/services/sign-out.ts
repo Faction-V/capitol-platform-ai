@@ -1,12 +1,12 @@
 "use server";
+import { redirect } from "next/navigation";
 
 import { cookies } from "next/headers";
 
-export async function getAllApiKeys() {
+export async function signOut() {
   const cookieStore = await cookies();
-
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/org/key`, {
+  const response = await fetch(`${proxy}/user/sign-out`, {
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
@@ -14,8 +14,11 @@ export async function getAllApiKeys() {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to get the list of api keys");
+    throw new Error("Failed to sign out");
   }
 
-  return await response?.json();
+  await response.json();
+
+  cookieStore.delete("gofapi");
+  redirect("/login");
 }
