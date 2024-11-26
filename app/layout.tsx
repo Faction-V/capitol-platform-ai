@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Capitol Platform Ai",
+  title: "Capitol Platform AI",
 };
 
 export default function RootLayout({

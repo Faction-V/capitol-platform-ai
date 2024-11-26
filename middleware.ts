@@ -29,10 +29,9 @@ export async function middleware(request: NextRequest) {
     if (member?.cookieName && member?.cookie) {
       cookieStore.set(member?.cookieName, member?.cookie);
     }
-    console.log("member", member);
 
     if (!member.error) {
-      return NextResponse.redirect(new URL("/new-member", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   }
 
@@ -45,10 +44,18 @@ export async function middleware(request: NextRequest) {
   });
 
   const user = await data.json();
-  console.log(user);
+  console.log("user", user);
+
+  if (user?.id) {
+    cookieStore.set("user", user?.id);
+  }
 
   // If the user is authenticated, continue as normal
   if (!user.error) {
+    if (!user?.firstName && !user?.lastName && pathname !== "/new-member") {
+      return NextResponse.redirect(new URL("/new-member", request.url));
+    }
+
     if (pathname === "/login") {
       return NextResponse.redirect(new URL("/", request.url));
     }
@@ -64,6 +71,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public|new-member).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images|public).*)",
   ],
 };
