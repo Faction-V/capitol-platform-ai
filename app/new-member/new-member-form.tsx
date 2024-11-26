@@ -4,7 +4,7 @@ import { useState, KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "../components/input";
 import { Button } from "../components/button";
-import { isStringEmpty } from "../utils/is-string-empty";
+import { isEmptyString } from "../utils/is-empty-string";
 import { toast } from "react-toastify";
 import { updateMember } from "./services/update-member";
 
@@ -12,7 +12,7 @@ export const NewMemberForm = () => {
   const router = useRouter();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const isDisabled = isStringEmpty(lastName) || isStringEmpty(firstName);
+  const isDisabled = isEmptyString(lastName) || isEmptyString(firstName);
 
   const handleSave = async () => {
     try {
@@ -41,7 +41,7 @@ export const NewMemberForm = () => {
           <div className="mb-3 w-full">
             <label
               htmlFor="first_name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               First name
             </label>
@@ -56,7 +56,7 @@ export const NewMemberForm = () => {
           <div className="mb-4 w-full">
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Last name
             </label>

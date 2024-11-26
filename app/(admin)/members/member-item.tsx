@@ -5,7 +5,7 @@ import { Member } from "./types";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
 import { toast } from "react-toastify";
 import { removeMember } from "./service/remove-member";
-import { isStringEmpty } from "../../utils/is-string-empty";
+import { isEmptyString } from "../../utils/is-empty-string";
 
 const colors: { [index: string]: string } = {
   a: "bg-red-300 text-red-950",
@@ -47,7 +47,7 @@ export const MemberItem = ({
   id,
   updateMembersAfterRemove,
 }: MemberItemProps) => {
-  const name = isStringEmpty(fullName.trim()) ? "Unknown name" : fullName;
+  const name = isEmptyString(fullName.trim()) ? "Unknown name" : fullName;
 
   const [firstName, lastName] = name.trim().split(/\s+/);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);

@@ -66,7 +66,7 @@ export default function KeysList({ keys }: KeysListProps) {
       />
       <div className="flow-root">
         <div className="flex justify-between">
-          <h3 className="text-xl font-semibold dark:text-white">API keys</h3>
+          <h3 className="text-xl font-semibold">API keys</h3>
           <Button
             label="New API key"
             onClick={() => setIsNameModalOpen(true)}

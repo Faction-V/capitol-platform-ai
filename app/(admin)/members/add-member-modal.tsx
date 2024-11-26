@@ -4,7 +4,7 @@ import { Input } from "../../components/input";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
 import { UserPlusIcon } from "../../icons/user-plus-icon";
-import { isStringEmpty } from "../../utils/is-string-empty";
+import { isEmptyString } from "../../utils/is-empty-string";
 import { sendInvite } from "./service/send-invite";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -34,7 +34,7 @@ export const AddMemberModal = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isStringEmpty(email)) {
+    if (isEmptyString(email)) {
       return;
     }
 
@@ -62,7 +62,7 @@ export const AddMemberModal = ({
               <div className="mb-3">
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   User email
                 </label>
@@ -82,7 +82,7 @@ export const AddMemberModal = ({
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
         <Button
-          disabled={isStringEmpty(email)}
+          disabled={isEmptyString(email)}
           label="Send invite"
           onClick={handleSendInvite}
         />

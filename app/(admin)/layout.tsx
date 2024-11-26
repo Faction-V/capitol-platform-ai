@@ -56,7 +56,16 @@ export default function MainLayout({
               >
                 Members
               </Link>
-
+              <Link
+                href="/organization"
+                className={
+                  pathname === "/organization"
+                    ? selectedLinkClassNames
+                    : linkClassNames
+                }
+              >
+                Organization settings
+              </Link>
               <a
                 rel="noopener noreferrer"
                 href="https://api.capitol.ai/"

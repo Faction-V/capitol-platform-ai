@@ -1,8 +1,8 @@
-export const EditIcon = () => (
+export const EditIcon = ({ size = 20 }) => (
   <div
     style={{
-      height: 20,
-      width: 20,
+      height: size,
+      width: size,
     }}
   >
     <svg

@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Input } from "@/app/components/input";
 import { Button } from "@/app/components/button";
 import { Modal } from "@/app/components/modal";
-import { isStringEmpty } from "../../utils/is-string-empty";
+import { isEmptyString } from "../../utils/is-empty-string";
 
 interface NameModalProps {
   isEdit?: boolean;
@@ -76,7 +76,7 @@ export const EditKeyModal = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isStringEmpty(name) || isStringEmpty(domain)) {
+    if (isEmptyString(name) || isEmptyString(domain)) {
       return;
     }
 
@@ -104,7 +104,7 @@ export const EditKeyModal = ({
               <div className="mb-3">
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Key name
                 </label>
@@ -119,7 +119,7 @@ export const EditKeyModal = ({
               <div>
                 <label
                   htmlFor="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Domain
                 </label>
@@ -137,7 +137,7 @@ export const EditKeyModal = ({
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
         <Button
-          disabled={isStringEmpty(name)}
+          disabled={isEmptyString(name)}
           label="Save"
           onClick={handleSave}
         />
