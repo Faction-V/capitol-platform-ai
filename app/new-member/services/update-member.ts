@@ -10,6 +10,8 @@ interface UpdateMemberProps {
 export async function updateMember({ lastName, firstName }: UpdateMemberProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
+  const id = cookieStore.get("user")?.value;
+
   const response = await fetch(`${proxy}/user`, {
     method: "PUT",
     headers: {
@@ -19,6 +21,7 @@ export async function updateMember({ lastName, firstName }: UpdateMemberProps) {
     body: JSON.stringify({
       lastName,
       firstName,
+      id,
     }),
   });
 
