@@ -3,6 +3,7 @@ import { MouseEvent, ReactNode } from "react";
 interface ButtonProps {
   disabled?: boolean;
   label: string | ReactNode;
+  customClassName?: string;
   type?: "primary" | "secondary";
   onClick: () => void;
 }
@@ -20,6 +21,7 @@ export const Button = ({
   type = "primary",
   label,
   disabled = false,
+  customClassName = "",
 }: ButtonProps) => {
   const buttonClassnames =
     type === "primary"
@@ -36,7 +38,7 @@ export const Button = ({
         onClick();
       }}
       type="button"
-      className={buttonClassnames}
+      className={`${buttonClassnames} ${customClassName}`}
     >
       {label}
     </button>

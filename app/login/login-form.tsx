@@ -39,25 +39,45 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      {isOtpVisible ? (
-        <Input
-          value={code}
-          placeholder="Code"
-          onChange={(value: string) => setCode(value)}
-          onKeyDown={handleKeyDown}
+    <div className="flex flex-col">
+      <div className="flex bg-white border border-gray-200 rounded-lg shadow justify-between items-center p-5 mb-2 flex-col gap-4">
+        <div className="flex flex-col gap-6 items-center w-80">
+          {isOtpVisible ? (
+            <div className="flex flex-col items-center">
+              <h3 className="text-xl font-semibold">Log in</h3>
+              <p className="text-base text-gray-700">
+                Enter the code you received on your email
+              </p>
+              <p className="text-sm text-gray-700 underline">{email}</p>
+            </div>
+          ) : (
+            <h3 className="text-xl font-semibold">Log in</h3>
+          )}
+
+          {isOtpVisible ? (
+            <Input
+              value={code}
+              placeholder="Code"
+              onChange={(value: string) => setCode(value)}
+              onKeyDown={handleKeyDown}
+            />
+          ) : (
+            <Input
+              name="email"
+              value={email}
+              placeholder="Email"
+              type="email"
+              onChange={(value: string) => setEmail(value)}
+              onKeyDown={handleKeyDown}
+            />
+          )}
+        </div>
+        <Button
+          label={buttonLabel}
+          onClick={handleButtonClick}
+          customClassName="w-full"
         />
-      ) : (
-        <Input
-          name="email"
-          value={email}
-          placeholder="Email"
-          type="email"
-          onChange={(value: string) => setEmail(value)}
-          onKeyDown={handleKeyDown}
-        />
-      )}
-      <Button label={buttonLabel} onClick={handleButtonClick} />
+      </div>
     </div>
   );
 };
