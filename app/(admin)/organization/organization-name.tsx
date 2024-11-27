@@ -5,7 +5,7 @@ import { Input } from "../../components/input";
 import { EditIcon } from "../../icons/edit-icon";
 import { Button } from "../../components/button";
 import { isEmptyString } from "../../utils/is-empty-string";
-import { updateOrgName } from "./serveces/update-org-name";
+import { updateOrgName } from "./services/update-org-name";
 
 export const OrganizationName = () => {
   const [name, setName] = useState("");
@@ -29,7 +29,7 @@ export const OrganizationName = () => {
 
   return (
     <div className="flex gap-2 flex-col bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2">
-      <div className="text-gray-900">Organisation name</div>
+      <div className="text-gray-900">Organization name</div>
       {isEditMode ? (
         <div className="flex justify-between w-full">
           <Input

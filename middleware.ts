@@ -44,7 +44,6 @@ export async function middleware(request: NextRequest) {
   });
 
   const user = await data.json();
-  console.log("user", user);
 
   if (user?.id) {
     cookieStore.set("user", user?.id);
