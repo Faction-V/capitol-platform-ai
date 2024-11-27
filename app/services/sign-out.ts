@@ -20,5 +20,6 @@ export async function signOut() {
   await response.json();
 
   cookieStore.delete("gofapi");
+  cookieStore.delete("user");
   redirect("/login");
 }
