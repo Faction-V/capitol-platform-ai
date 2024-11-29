@@ -1,33 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { ImageIcon } from "@/app/icons/image-icon";
 import { updateOrgLogo } from "../(admin)/organization/services/upload-org-logo";
 
-const handleImageUpload = async (file: File) => {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  // try {
-  //   const response = await axios.post(
-  //     "http://a1ab86825a553444a99225e96a91e174-1009329405.us-east-1.elb.amazonaws.com/api/v1/org/logo",
-  //     formData,
-  //   );
-  //   // Handle the enhanced image response here
-  //   console.log("Enhanced image:", response.data);
-  //   // Update state or display the enhanced image
-  // } catch (error) {
-  //   console.error("Error enhancing image:", error);
-  // }
-
-  await updateOrgLogo({ formData });
-};
-
 export const Dropzone = () => {
+  const [image, setImage] = useState<string | null>(null);
   const onDrop = useCallback(() => {
     // Do something with the files
   }, []);
+
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const result = await updateOrgLogo({ formData });
+    setImage(result?.url);
+  };
   const onDropAccepted = useCallback(async (acceptedFiles: File[]) => {
     const result = await handleImageUpload(acceptedFiles[0]);
     console.log("result", result);
@@ -57,6 +48,7 @@ export const Dropzone = () => {
           </span>
         </div>
       </div>
+      {image && <img src={image} alt="Preview" />}
     </div>
   );
 };

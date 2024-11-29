@@ -9,7 +9,7 @@ interface UpdateOrgNameProps {
 export async function updateOrgName({ name }: UpdateOrgNameProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/org/key`, {
+  const response = await fetch(`${proxy}/org`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
