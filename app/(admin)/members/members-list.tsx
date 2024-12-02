@@ -5,9 +5,12 @@ import { ToastContainer } from "react-toastify";
 import { MemberItem } from "./member-item";
 import { Button } from "@/app/components/button";
 import { AddMemberModal } from "./add-member-modal";
-import { Member } from "./types";
+import { Member, User } from "../../types";
+import { useUser } from "../UserProvider";
 
 export default function MembersList({ members }: { members: Member[] }) {
+  const user: User | undefined = useUser();
+  const isAdmin: boolean = user?.typeName === "Admin";
   const [membersList, setMembersList] = useState(members);
   const [isAddUserModalOpen, setAddUserModalOpen] = useState(false);
 
@@ -32,15 +35,18 @@ export default function MembersList({ members }: { members: Member[] }) {
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">Members</h3>
-          <Button
-            label="Add member"
-            onClick={() => setAddUserModalOpen(true)}
-          />
+          {isAdmin && (
+            <Button
+              label="Add member"
+              onClick={() => setAddUserModalOpen(true)}
+            />
+          )}
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         <div>
           {membersList.map((member: Member) => (
             <MemberItem
+              isAdmin={isAdmin}
               key={member.id}
               {...member}
               updateMembersAfterRemove={updateMembersAfterRemove}

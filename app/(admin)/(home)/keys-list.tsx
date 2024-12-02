@@ -4,14 +4,17 @@ import { useState } from "react";
 import { EditKeyModal } from "./edit-key-modal";
 import { ToastContainer } from "react-toastify";
 import { KeyItem } from "./key-item";
-import { Key } from "./types";
+import { Key, User } from "../../types";
 import { Button } from "@/app/components/button";
+import { useUser } from "../UserProvider";
 
 interface KeysListProps {
   keys: Array<Key>;
 }
 
 export default function KeysList({ keys }: KeysListProps) {
+  const user: User | undefined = useUser();
+  const isAdmin: boolean = user?.typeName === "Admin";
   const [keysList, setKeyList] = useState(keys);
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
 
@@ -67,10 +70,12 @@ export default function KeysList({ keys }: KeysListProps) {
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">API keys</h3>
-          <Button
-            label="New API key"
-            onClick={() => setIsNameModalOpen(true)}
-          />
+          {isAdmin && (
+            <Button
+              label="New API key"
+              onClick={() => setIsNameModalOpen(true)}
+            />
+          )}
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         {keysList.length === 0 && (
@@ -80,6 +85,7 @@ export default function KeysList({ keys }: KeysListProps) {
         )}
         {keysList.map((item) => (
           <KeyItem
+            isAdmin={isAdmin}
             key={item?.id}
             {...item}
             editKey={editKey}
