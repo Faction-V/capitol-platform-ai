@@ -12,16 +12,9 @@ export const Dropzone = () => {
     // Do something with the files
   }, []);
 
-  const handleImageUpload = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const result = await updateOrgLogo({ formData });
-    setImage(result?.url);
-  };
   const onDropAccepted = useCallback(async (acceptedFiles: File[]) => {
-    const result = await handleImageUpload(acceptedFiles[0]);
-    console.log("result", result);
+    const result = await updateOrgLogo({ file: acceptedFiles[0] });
+    setImage(result?.url);
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

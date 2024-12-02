@@ -29,7 +29,14 @@ export const OrganizationName = () => {
 
   return (
     <div className="flex gap-2 flex-col bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2">
-      <div className="text-gray-900">Organization name</div>
+      <div className="flex justify-between w-full">
+        <div className="text-gray-900">Organization name</div>
+        <Button
+          label={<EditIcon size={16} />}
+          onClick={() => setIsEditMode(true)}
+          type="secondary"
+        />
+      </div>
       {isEditMode ? (
         <div className="flex justify-between w-full">
           <Input
@@ -52,14 +59,7 @@ export const OrganizationName = () => {
           </div>
         </div>
       ) : (
-        <div className="flex justify-between w-full">
-          <div className="font-semibold">{name}</div>
-          <Button
-            label={<EditIcon size={16} />}
-            onClick={() => setIsEditMode(true)}
-            type="secondary"
-          />
-        </div>
+        <div className="flex justify-between w-full font-semibold">{name}</div>
       )}
     </div>
   );
