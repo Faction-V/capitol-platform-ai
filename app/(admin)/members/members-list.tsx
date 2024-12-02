@@ -9,7 +9,7 @@ import { Member } from "./types";
 
 export default function MembersList({ members }: { members: Member[] }) {
   const [membersList, setMembersList] = useState(members);
-  const [isAddAddUserModalOpen, setAddAddUserModalOpen] = useState(false);
+  const [isAddUserModalOpen, setAddUserModalOpen] = useState(false);
 
   const updateMembersAfterRemove = (id: string) => {
     const filteredMembers = membersList.filter((member) => member.id !== id);
@@ -34,7 +34,7 @@ export default function MembersList({ members }: { members: Member[] }) {
           <h3 className="text-xl font-semibold">Members</h3>
           <Button
             label="Add member"
-            onClick={() => setAddAddUserModalOpen(true)}
+            onClick={() => setAddUserModalOpen(true)}
           />
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
@@ -48,8 +48,8 @@ export default function MembersList({ members }: { members: Member[] }) {
           ))}
         </div>
       </div>
-      {isAddAddUserModalOpen && (
-        <AddMemberModal setAddAddUserModalOpen={setAddAddUserModalOpen} />
+      {isAddUserModalOpen && (
+        <AddMemberModal setAddUserModalOpen={setAddUserModalOpen} />
       )}
     </div>
   );
