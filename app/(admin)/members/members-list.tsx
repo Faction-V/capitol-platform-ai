@@ -31,7 +31,7 @@ export default function MembersList({ members }: { members: Member[] }) {
       />
       <div className="flow-root">
         <div className="flex justify-between">
-          <h3 className="text-xl font-semibold dark:text-white">Members</h3>
+          <h3 className="text-xl font-semibold">Members</h3>
           <Button
             label="Add member"
             onClick={() => setAddAddUserModalOpen(true)}
