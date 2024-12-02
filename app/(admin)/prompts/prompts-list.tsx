@@ -15,7 +15,7 @@ interface PromptsListProps {
   prompts: Array<Prompt>;
 }
 
-export const PromptsList = ({ prompts }: PromptsListProps) => {
+export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
   const [promptsList, setPromptsList] = useState(prompts);
 
@@ -55,13 +55,13 @@ export const PromptsList = ({ prompts }: PromptsListProps) => {
           />
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
-        {promptsList.length === 0 && (
+        {promptsList?.length === 0 && (
           <p className="text-gray-500">
             There are no prompts associated with your account.
           </p>
         )}
 
-        {promptsList.map((prompt: Prompt) => (
+        {promptsList?.map((prompt: Prompt) => (
           <PromptItem
             key={prompt?.id}
             id={prompt?.id}
