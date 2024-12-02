@@ -1,43 +1,48 @@
+"use client";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Input } from "../../components/input";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
-import { UserPlusIcon } from "../../icons/user-plus-icon";
+import { PlusIcon } from "../../icons/plus-icon";
 import { isEmptyString } from "../../utils/is-empty-string";
-import { sendInvite } from "./service/send-invite";
 import "react-toastify/dist/ReactToastify.css";
+import { savePrompt } from "./services/save-prompt";
+import { Textarea } from "../../components/textarea";
 
-interface AddUserModalProps {
-  setAddUserModalOpen: (isModalOpen: boolean) => void;
+interface AddPromptModalProps {
+  setAddPromptModalOpen: (isModalOpen: boolean) => void;
+  onSaveCallback: (prompt: { id: string; prompt: string }) => void;
 }
 
-export const AddMemberModal = ({ setAddUserModalOpen }: AddUserModalProps) => {
-  const [email, setEmail] = useState("");
+export const AddPromptModal = ({
+  setAddPromptModalOpen,
+  onSaveCallback,
+}: AddPromptModalProps) => {
+  const [prompt, setPrompt] = useState("");
 
-  const handleSendInvite = async () => {
+  const handleSavePrompt = async () => {
+    const trimmedPrompt = prompt.trim();
+
     try {
-      const response = await sendInvite({ email });
+      const response = await savePrompt({ prompt: trimmedPrompt });
 
-      if (response?.code === "invitation-sent") {
-        toast.success(response?.message);
-      } else {
-        toast.warning(response?.message);
-      }
+      onSaveCallback(response?.prompt);
+
+      toast.success(response?.message);
     } catch (error) {
       toast.error((error as Error).message);
     }
 
-    setAddUserModalOpen(false);
+    setAddPromptModalOpen(false);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isEmptyString(email)) {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (isEmptyString(prompt)) {
       return;
     }
 
     if (event.key === "Enter") {
-      handleSendInvite();
+      handleSavePrompt();
     }
   };
 
@@ -46,32 +51,24 @@ export const AddMemberModal = ({ setAddUserModalOpen }: AddUserModalProps) => {
       <div className="bg-white px-4 pb-4 pt-5">
         <div className="flex gap-4">
           <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-gray-100">
-            <UserPlusIcon />
+            <PlusIcon />
           </div>
           <div className="flex-grow">
             <h3
               className="text-base font-semibold text-gray-900"
               id="modal-title"
             >
-              Add member
+              Add prompt
             </h3>
             <hr className="h-px my-3 bg-gray-200 border-0" />
             <div className="mt-2">
               <div className="mb-3">
-                <label
-                  htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900"
-                >
-                  User email
-                </label>
-                <Input
+                <Textarea
                   onChange={(value: string) => {
-                    setEmail(value);
+                    setPrompt(value);
                   }}
                   onKeyDown={handleKeyDown}
-                  value={email}
-                  type="email"
-                  id="email"
+                  value={prompt}
                 />
               </div>
             </div>
@@ -80,14 +77,14 @@ export const AddMemberModal = ({ setAddUserModalOpen }: AddUserModalProps) => {
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
         <Button
-          disabled={isEmptyString(email)}
-          label="Send invite"
-          onClick={handleSendInvite}
+          disabled={isEmptyString(prompt)}
+          label="Save"
+          onClick={handleSavePrompt}
         />
         <Button
           type="secondary"
           label="Cancel"
-          onClick={() => setAddUserModalOpen(false)}
+          onClick={() => setAddPromptModalOpen(false)}
         />
       </div>
     </Modal>

@@ -66,6 +66,16 @@ export default function MainLayout({
               >
                 Organization settings
               </Link>
+              <Link
+                href="/prompts"
+                className={
+                  pathname === "/prompts"
+                    ? selectedLinkClassNames
+                    : linkClassNames
+                }
+              >
+                Suggested prompts
+              </Link>
               <a
                 rel="noopener noreferrer"
                 href="https://api.capitol.ai/"
