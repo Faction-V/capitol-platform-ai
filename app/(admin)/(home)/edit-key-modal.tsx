@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { createApiKey } from "./services/create-api-key";
 import { editApiKey } from "./services/edit-api-key";
 import { KeyIcon } from "../../icons/key-icon";
-import { Key } from "./types";
+import { Key } from "../../types";
 
 import "react-toastify/dist/ReactToastify.css";
 import { Input } from "@/app/components/input";

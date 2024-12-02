@@ -5,6 +5,8 @@ import { Button } from "../../components/button";
 import { useState } from "react";
 import { AddPromptModal } from "./add-prompt-modal";
 import { PromptItem } from "./prompt-item";
+import { User } from "../../types";
+import { useUser } from "../UserProvider";
 
 interface Prompt {
   id: string;
@@ -16,6 +18,9 @@ interface PromptsListProps {
 }
 
 export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
+  const user: User | undefined = useUser();
+  const isAdmin: boolean = user?.typeName === "Admin";
+
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
   const [promptsList, setPromptsList] = useState(prompts);
 
@@ -47,12 +52,14 @@ export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
         />
         <div className="flex justify-between">
           <h3 className="text-xlv font-semibold">Suggested prompts</h3>
-          <Button
-            label="Add prompt"
-            onClick={() => {
-              setAddPromptModalOpen(true);
-            }}
-          />
+          {isAdmin && (
+            <Button
+              label="Add prompt"
+              onClick={() => {
+                setAddPromptModalOpen(true);
+              }}
+            />
+          )}
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
         {promptsList?.length === 0 && (

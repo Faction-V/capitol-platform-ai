@@ -4,11 +4,12 @@ import { EditIcon } from "../../icons/edit-icon";
 import { TrashIcon } from "../../icons/trash-icon";
 import { EditKeyModal } from "./edit-key-modal";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
-import { Key } from "./types";
+import { Key } from "../../types";
 import { deleteApiKey } from "./services/delete-api-key";
 import { Button } from "@/app/components/button";
 
 interface KeyItemProps extends Key {
+  isAdmin: boolean;
   deleteKey: (id: string) => void;
   editKey: ({
     id,
@@ -28,6 +29,7 @@ export const KeyItem = ({
   editKey,
   deleteKey,
   domain,
+  isAdmin,
 }: KeyItemProps) => {
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -50,18 +52,20 @@ export const KeyItem = ({
           <p className="font-normal text-gray-700">{apiKey}</p>
           <span className="text-sm text-gray-700">{domain}</span>
         </div>
-        <div className="flex gap-2 items-start">
-          <Button
-            label={<EditIcon />}
-            type="secondary"
-            onClick={() => setIsNameModalOpen(true)}
-          />
-          <Button
-            label={<TrashIcon />}
-            type="secondary"
-            onClick={() => setIsConfirmationModalOpen(true)}
-          />
-        </div>
+        {isAdmin && (
+          <div className="flex gap-2 items-start">
+            <Button
+              label={<EditIcon />}
+              type="secondary"
+              onClick={() => setIsNameModalOpen(true)}
+            />
+            <Button
+              label={<TrashIcon />}
+              type="secondary"
+              onClick={() => setIsConfirmationModalOpen(true)}
+            />
+          </div>
+        )}
       </div>
       {isConfirmationModalOpen && (
         <DeleteConfirmationModal

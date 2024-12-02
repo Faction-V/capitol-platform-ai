@@ -1,46 +1,20 @@
 import { useState } from "react";
 import { TrashIcon } from "@/app/icons/trash-icon";
 import { Button } from "@/app/components/button";
-import { Member } from "./types";
+import { Member } from "../../types";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
 import { toast } from "react-toastify";
 import { removeMember } from "./service/remove-member";
 import { isEmptyString } from "../../utils/is-empty-string";
-
-const colors: { [index: string]: string } = {
-  a: "bg-red-300 text-red-950",
-  b: "bg-orange-300 text-orange-950",
-  c: "bg-amber-300 text-amber-950",
-  d: "bg-yellow-300 text-yellow-950",
-  e: "bg-lime-300 text-lime-950",
-  f: "bg-zinc-300 text-zinc-950",
-  g: "bg-green-300 text-green-950",
-  h: "bg-emerald-300 text-emerald-950",
-  i: "bg-teal-300 text-teal-950",
-  j: "bg-cyan-300 text-cyan-950",
-  k: "bg-sky-300 text-sky-950",
-  l: "bg-blue-300 text-blue-950",
-  m: "bg-indigo-300 text-indigo-950",
-  n: "bg-violet-300 text-violet-950",
-  o: "bg-purple-300 text-purple-950",
-  p: "bg-fuchsia-300 text-fuchsia-950",
-  q: "bg-pink-300 text-pink-950",
-  r: "bg-rose-300 text-rose-950",
-  s: "bg-slate-300 text-slate-950",
-  t: "bg-gray-300 text-gray-950",
-  u: "bg-neutral-300 text-neutral-950",
-  v: "bg-teal-300 text-teal-950",
-  w: "bg-blue-300 text-blue-950",
-  x: "bg-green-300 text-green-950",
-  y: "bg-emerald-300 text-emerald-950",
-  z: "bg-amber-300 text-amber-950",
-};
+import { colors } from "./colors";
 
 interface MemberItemProps extends Member {
+  isAdmin: boolean;
   updateMembersAfterRemove: (id: string) => void;
 }
 
 export const MemberItem = ({
+  isAdmin,
   fullName,
   role,
   email,
@@ -82,7 +56,7 @@ export const MemberItem = ({
           <p className="font-normal text-sm text-gray-700">{role}</p>
         </div>
       </div>
-      {role !== "owner" && (
+      {isAdmin && role !== "owner" && (
         <div className="flex items-start">
           <Button
             label={<TrashIcon />}

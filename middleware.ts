@@ -45,6 +45,13 @@ export async function middleware(request: NextRequest) {
 
   const user = await data.json();
 
+  const userData = {
+    id: user?.id,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    typeName: user?.typeName,
+  };
+
   if (user?.id) {
     cookieStore.set("user", user?.id);
   }
@@ -59,7 +66,14 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
-    return NextResponse.next();
+    const headers = new Headers(request.headers);
+    headers.set("user", JSON.stringify(userData));
+
+    return NextResponse.next({
+      request: {
+        headers,
+      },
+    });
   }
 
   if (pathname !== "/login") {
