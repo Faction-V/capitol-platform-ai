@@ -49,7 +49,7 @@ export async function middleware(request: NextRequest) {
     id: user?.id,
     firstName: user?.firstName,
     lastName: user?.lastName,
-    typeName: user?.typeName,
+    isOwner: user?.orgInfo?.role === "owner",
   };
 
   if (user?.id) {

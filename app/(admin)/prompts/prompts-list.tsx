@@ -19,7 +19,6 @@ interface PromptsListProps {
 
 export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
   const user: User | undefined = useUser();
-  const isAdmin: boolean = user?.typeName === "Admin";
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
   const [promptsList, setPromptsList] = useState(prompts);
@@ -52,7 +51,7 @@ export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
         />
         <div className="flex justify-between">
           <h3 className="text-xlv font-semibold">Suggested prompts</h3>
-          {isAdmin && (
+          {user?.isOwner && (
             <Button
               label="Add prompt"
               onClick={() => {

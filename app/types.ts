@@ -10,7 +10,7 @@ export interface User {
   id: string;
   firstName: string;
   lastName: string;
-  typeName: string;
+  isOwner: boolean;
 }
 
 export interface Member {

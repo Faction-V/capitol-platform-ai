@@ -10,7 +10,6 @@ import { useUser } from "../UserProvider";
 
 export default function MembersList({ members }: { members: Member[] }) {
   const user: User | undefined = useUser();
-  const isAdmin: boolean = user?.typeName === "Admin";
   const [membersList, setMembersList] = useState(members);
   const [isAddUserModalOpen, setAddUserModalOpen] = useState(false);
 
@@ -35,7 +34,7 @@ export default function MembersList({ members }: { members: Member[] }) {
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">Members</h3>
-          {isAdmin && (
+          {user?.isOwner && (
             <Button
               label="Add member"
               onClick={() => setAddUserModalOpen(true)}
@@ -46,7 +45,7 @@ export default function MembersList({ members }: { members: Member[] }) {
         <div>
           {membersList.map((member: Member) => (
             <MemberItem
-              isAdmin={isAdmin}
+              isOwner={user?.isOwner}
               key={member.id}
               {...member}
               updateMembersAfterRemove={updateMembersAfterRemove}

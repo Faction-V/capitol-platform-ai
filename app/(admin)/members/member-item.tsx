@@ -9,12 +9,12 @@ import { isEmptyString } from "../../utils/is-empty-string";
 import { colors } from "./colors";
 
 interface MemberItemProps extends Member {
-  isAdmin: boolean;
+  isOwner: boolean | undefined;
   updateMembersAfterRemove: (id: string) => void;
 }
 
 export const MemberItem = ({
-  isAdmin,
+  isOwner,
   fullName,
   role,
   email,
@@ -56,7 +56,7 @@ export const MemberItem = ({
           <p className="font-normal text-sm text-gray-700">{role}</p>
         </div>
       </div>
-      {isAdmin && role !== "owner" && (
+      {isOwner && role !== "owner" && (
         <div className="flex items-start">
           <Button
             label={<TrashIcon />}
