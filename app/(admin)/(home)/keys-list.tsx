@@ -14,7 +14,6 @@ interface KeysListProps {
 
 export default function KeysList({ keys }: KeysListProps) {
   const user: User | undefined = useUser();
-  const isAdmin: boolean = user?.typeName === "Admin";
   const [keysList, setKeyList] = useState(keys);
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
 
@@ -70,7 +69,7 @@ export default function KeysList({ keys }: KeysListProps) {
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">API keys</h3>
-          {isAdmin && (
+          {user?.isOwner && (
             <Button
               label="New API key"
               onClick={() => setIsNameModalOpen(true)}
@@ -85,7 +84,7 @@ export default function KeysList({ keys }: KeysListProps) {
         )}
         {keysList.map((item) => (
           <KeyItem
-            isAdmin={isAdmin}
+            isOwner={user?.isOwner}
             key={item?.id}
             {...item}
             editKey={editKey}

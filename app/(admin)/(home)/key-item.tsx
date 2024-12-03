@@ -9,7 +9,7 @@ import { deleteApiKey } from "./services/delete-api-key";
 import { Button } from "@/app/components/button";
 
 interface KeyItemProps extends Key {
-  isAdmin: boolean;
+  isOwner: boolean | undefined;
   deleteKey: (id: string) => void;
   editKey: ({
     id,
@@ -29,7 +29,7 @@ export const KeyItem = ({
   editKey,
   deleteKey,
   domain,
-  isAdmin,
+  isOwner,
 }: KeyItemProps) => {
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -52,7 +52,7 @@ export const KeyItem = ({
           <p className="font-normal text-gray-700">{apiKey}</p>
           <span className="text-sm text-gray-700">{domain}</span>
         </div>
-        {isAdmin && (
+        {isOwner && (
           <div className="flex gap-2 items-start">
             <Button
               label={<EditIcon />}
