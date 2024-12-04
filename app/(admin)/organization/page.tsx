@@ -15,7 +15,7 @@ export default async function OrganizationPage() {
   const name = result?.organization?.name;
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-full">
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">Organization settings</h3>

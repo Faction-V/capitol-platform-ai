@@ -54,7 +54,7 @@ export default function KeysList({ keys }: KeysListProps) {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-full">
       <ToastContainer
         position="top-center"
         autoClose={5000}
