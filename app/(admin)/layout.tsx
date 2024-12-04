@@ -44,7 +44,7 @@ export default async function MainLayout({
       <div className="flex pt-16 overflow-hidden bg-gray-50 h-full">
         <Navigation />
         <div className="relative w-full h-full overflow-y-auto bg-gray-50 ml-64">
-          <div className="grid grid-cols-1 p-6 h-full">
+          <div className="flex p-6 w-full">
             <UserProvider user={user}>{children}</UserProvider>
           </div>
         </div>

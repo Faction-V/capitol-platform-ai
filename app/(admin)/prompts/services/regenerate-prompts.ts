@@ -1,30 +1,24 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
-interface SavePromptProps {
-  prompt: string;
-}
-
-export async function savePrompt({ prompt }: SavePromptProps) {
+export async function regeneratePrompts() {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/api_example_prompts`, {
+  const response = await fetch(`${proxy}/api_prompts/org/regenerate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
     },
-    body: JSON.stringify({
-      prompt,
-    }),
   });
 
-  console.log(response.ok);
-
   if (!response.ok) {
-    throw new Error("Failed to save the prompt");
+    throw new Error("Failed to generate the list of prompts");
   }
+
+  revalidateTag("api-prompts");
 
   return await response?.json();
 }
