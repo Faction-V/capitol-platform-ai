@@ -11,6 +11,8 @@ export interface User {
   firstName: string;
   lastName: string;
   isOwner: boolean;
+  orgName: string;
+  orgLogo: string;
 }
 
 export interface Member {

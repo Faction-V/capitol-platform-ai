@@ -50,11 +50,9 @@ export async function middleware(request: NextRequest) {
     firstName: user?.firstName,
     lastName: user?.lastName,
     isOwner: user?.orgInfo?.role === "owner",
+    orgName: user?.orgInfo?.name,
+    orgLogo: user?.orgInfo?.imageUrl,
   };
-
-  if (user?.id) {
-    cookieStore.set("user", user?.id);
-  }
 
   // If the user is authenticated, continue as normal
   if (!user.error) {

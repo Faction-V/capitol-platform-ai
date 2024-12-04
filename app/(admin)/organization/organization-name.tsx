@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { Input } from "../../components/input";
 import { EditIcon } from "../../icons/edit-icon";
 import { Button } from "../../components/button";
 import { isEmptyString } from "../../utils/is-empty-string";
 import { updateOrgName } from "./services/update-org-name";
 
-export const OrganizationName = () => {
-  const [name, setName] = useState("");
+interface OrganizationNameProps {
+  orgName: string;
+}
+
+export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
+  const [name, setName] = useState(orgName);
   const [isEditMode, setIsEditMode] = useState(false);
 
   const handleSaveName = async () => {
@@ -27,6 +31,12 @@ export const OrganizationName = () => {
     setIsEditMode(false);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSaveName();
+    }
+  };
+
   return (
     <div className="flex gap-2 flex-col bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2">
       <div className="flex justify-between w-full">
@@ -43,7 +53,7 @@ export const OrganizationName = () => {
             onChange={(value: string) => {
               setName(value);
             }}
-            onKeyDown={() => {}}
+            onKeyDown={handleKeyDown}
             value={name}
             customClassName="max-w-80"
           />
