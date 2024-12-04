@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { TrashIcon } from "../../icons/trash-icon";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
-import { deleteExamplePrompt } from "./services/delete-example-prompt";
 import { Button } from "@/app/components/button";
 
 interface PromptItemProps {
