@@ -5,6 +5,8 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
   const pathname = request.nextUrl.pathname;
+  const code = request.nextUrl.searchParams.get("code");
+  const email = request.nextUrl.searchParams.get("email");
 
   // If the user is trying to validate an invitation code
   if (pathname.includes("/org/invite")) {
@@ -72,6 +74,25 @@ export async function middleware(request: NextRequest) {
         headers,
       },
     });
+  }
+
+  if (code && email) {
+    const data = await fetch(`${proxy}/user/otp/validate`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify({
+        email: email?.toLowerCase(),
+        code: code,
+      }),
+    });
+
+    const responseData = await data.json();
+    cookieStore.set(responseData?.cookieName, responseData?.cookie);
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   if (pathname !== "/login") {
