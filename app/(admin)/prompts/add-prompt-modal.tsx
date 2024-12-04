@@ -1,40 +1,22 @@
 "use client";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
 import { PlusIcon } from "../../icons/plus-icon";
 import { isEmptyString } from "../../utils/is-empty-string";
 import "react-toastify/dist/ReactToastify.css";
-import { savePrompt } from "./services/save-prompt";
 import { Textarea } from "../../components/textarea";
 
 interface AddPromptModalProps {
   setAddPromptModalOpen: (isModalOpen: boolean) => void;
-  onSaveCallback: (prompt: { id: string; prompt: string }) => void;
+  handleSavePrompt: (prompt: string) => void;
 }
 
 export const AddPromptModal = ({
   setAddPromptModalOpen,
-  onSaveCallback,
+  handleSavePrompt,
 }: AddPromptModalProps) => {
   const [prompt, setPrompt] = useState("");
-
-  const handleSavePrompt = async () => {
-    const trimmedPrompt = prompt.trim();
-
-    try {
-      const response = await savePrompt({ prompt: trimmedPrompt });
-
-      onSaveCallback(response?.prompt);
-
-      toast.success(response?.message);
-    } catch (error) {
-      toast.error((error as Error).message);
-    }
-
-    setAddPromptModalOpen(false);
-  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (isEmptyString(prompt)) {
@@ -42,7 +24,7 @@ export const AddPromptModal = ({
     }
 
     if (event.key === "Enter") {
-      handleSavePrompt();
+      handleSavePrompt(prompt);
     }
   };
 
@@ -79,7 +61,7 @@ export const AddPromptModal = ({
         <Button
           disabled={isEmptyString(prompt)}
           label="Save"
-          onClick={handleSavePrompt}
+          onClick={() => handleSavePrompt(prompt)}
         />
         <Button
           type="secondary"

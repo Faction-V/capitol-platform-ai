@@ -2,14 +2,14 @@
 
 import { cookies } from "next/headers";
 
-interface DeletePromptProps {
+interface DeleteApiPromptProps {
   id: string;
 }
 
-export async function deletePrompt({ id }: DeletePromptProps) {
+export async function deleteApiPrompt({ id }: DeleteApiPromptProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/api_example_prompts/${id}`, {
+  const response = await fetch(`${proxy}/api_prompts/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

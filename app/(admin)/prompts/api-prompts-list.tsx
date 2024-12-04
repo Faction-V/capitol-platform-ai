@@ -1,54 +1,65 @@
 "use client";
 
-import { ToastContainer } from "react-toastify";
 import { Button } from "../../components/button";
 import { useState } from "react";
 import { AddPromptModal } from "./add-prompt-modal";
 import { PromptItem } from "./prompt-item";
 import { User } from "../../types";
 import { useUser } from "../UserProvider";
+import { toast } from "react-toastify";
+import { saveApiPromptPropsPrompt } from "./services/save-api-prompt";
+import { deleteApiPrompt } from "./services/delete-api-prompt";
 
 interface Prompt {
   id: string;
   prompt: string;
 }
 
-interface PromptsListProps {
+interface ApiPromptsListProps {
   prompts: Array<Prompt>;
 }
 
-export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
+export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
   const user: User | undefined = useUser();
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
   const [promptsList, setPromptsList] = useState(prompts);
 
-  const onDeleteCallback = (id: string) => {
-    const updatedPrompts = promptsList.filter((prompt) => prompt.id !== id);
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteApiPrompt({ id });
+      toast.success("Prompt was deleted successfully");
+      const updatedPrompts = promptsList.filter((prompt) => prompt.id !== id);
 
-    setPromptsList(updatedPrompts);
+      setPromptsList(updatedPrompts);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
   };
 
-  const onSaveCallback = (prompt: Prompt) => {
-    const updatedPrompts = [...promptsList, prompt];
+  const handleSavePrompt = async (prompt: string) => {
+    const trimmedPrompt = prompt.trim();
 
-    setPromptsList(updatedPrompts);
+    try {
+      const response = await saveApiPromptPropsPrompt({
+        prompt: trimmedPrompt,
+      });
+
+      const updatedPrompts = [...promptsList, response?.prompt];
+
+      setPromptsList(updatedPrompts);
+
+      toast.success(response?.message);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+
+    setAddPromptModalOpen(false);
   };
 
   return (
-    <div className="mb-4">
-      <div className="flow-root">
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          pauseOnHover
-          theme="light"
-        />
+    <div className="flex">
+      <div className="flex flex-col">
         <div className="flex justify-between">
           <h3 className="text-xlv font-semibold">Suggested prompts</h3>
           {user?.isOwner && (
@@ -63,7 +74,7 @@ export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
         <hr className="h-px my-4 bg-gray-200 border-0" />
         {promptsList?.length === 0 && (
           <p className="text-gray-500">
-            There are no prompts associated with your account.
+            Add example prompts and press &#34;Generate prompts&#34; button
           </p>
         )}
 
@@ -72,14 +83,14 @@ export const PromptsList = ({ prompts = [] }: PromptsListProps) => {
             key={prompt?.id}
             id={prompt?.id}
             prompt={prompt?.prompt}
-            onDeleteCallback={onDeleteCallback}
+            handleDelete={handleDelete}
           />
         ))}
       </div>
       {isAddPromptModalOpen && (
         <AddPromptModal
           setAddPromptModalOpen={setAddPromptModalOpen}
-          onSaveCallback={onSaveCallback}
+          handleSavePrompt={handleSavePrompt}
         />
       )}
     </div>

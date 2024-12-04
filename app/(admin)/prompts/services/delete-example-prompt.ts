@@ -2,10 +2,15 @@
 
 import { cookies } from "next/headers";
 
-export async function getAllPrompts() {
+interface DeletePromptProps {
+  id: string;
+}
+
+export async function deleteExamplePrompt({ id }: DeletePromptProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/api_example_prompts`, {
+  const response = await fetch(`${proxy}/api_example_prompts/${id}`, {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
@@ -13,7 +18,7 @@ export async function getAllPrompts() {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to get the list of prompts");
+    throw new Error("Failed to delete the prompt");
   }
 
   return await response?.json();

@@ -2,32 +2,17 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { TrashIcon } from "../../icons/trash-icon";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
-import { deletePrompt } from "./services/delete-prompt";
+import { deleteExamplePrompt } from "./services/delete-example-prompt";
 import { Button } from "@/app/components/button";
 
 interface PromptItemProps {
   id: string;
   prompt: string;
-  onDeleteCallback: (id: string) => void;
+  handleDelete: (id: string) => void;
 }
 
-export const PromptItem = ({
-  prompt,
-  id,
-  onDeleteCallback,
-}: PromptItemProps) => {
+export const PromptItem = ({ prompt, id, handleDelete }: PromptItemProps) => {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-
-  const handleDelete = async () => {
-    try {
-      await deletePrompt({ id });
-      toast.success("Prompt was deleted successfully");
-      setIsConfirmationModalOpen(false);
-      onDeleteCallback(id);
-    } catch (error) {
-      toast.error((error as Error).message);
-    }
-  };
 
   return (
     <>
@@ -46,7 +31,10 @@ export const PromptItem = ({
           title="Delete prompt"
           description="Are you sure you want to delete the prompt? This action cannot be undone."
           buttonLabel="Delete prompt"
-          handleDelete={handleDelete}
+          handleDelete={() => {
+            handleDelete(id);
+            setIsConfirmationModalOpen(false);
+          }}
           handleCancel={() => setIsConfirmationModalOpen(false)}
         />
       )}
