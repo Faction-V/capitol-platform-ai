@@ -89,7 +89,7 @@ export const ExamplePromptsList = ({
         <hr className="h-px my-4 bg-gray-200 border-0" />
         {prompts?.length === 0 && (
           <p className="text-gray-500">
-            There are no prompts associated with your account.
+            Add example prompts and press &#34;Generate prompts&#34; button
           </p>
         )}
 
