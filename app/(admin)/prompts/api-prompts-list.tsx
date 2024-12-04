@@ -9,29 +9,28 @@ import { useUser } from "../UserProvider";
 import { toast } from "react-toastify";
 import { saveApiPromptPropsPrompt } from "./services/save-api-prompt";
 import { deleteApiPrompt } from "./services/delete-api-prompt";
-
-interface Prompt {
-  id: string;
-  prompt: string;
-}
+import { Prompt } from "../../types";
 
 interface ApiPromptsListProps {
   prompts: Array<Prompt>;
+  setApiPromptsList: (prompts: Array<Prompt>) => void;
 }
 
-export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
+export const ApiPromptsList = ({
+  prompts = [],
+  setApiPromptsList,
+}: ApiPromptsListProps) => {
   const user: User | undefined = useUser();
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
-  const [promptsList, setPromptsList] = useState(prompts);
 
   const handleDelete = async (id: string) => {
     try {
       await deleteApiPrompt({ id });
       toast.success("Prompt was deleted successfully");
-      const updatedPrompts = promptsList.filter((prompt) => prompt.id !== id);
+      const updatedPrompts = prompts.filter((prompt) => prompt.id !== id);
 
-      setPromptsList(updatedPrompts);
+      setApiPromptsList(updatedPrompts);
     } catch (error) {
       toast.error((error as Error).message);
     }
@@ -45,9 +44,9 @@ export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
         prompt: trimmedPrompt,
       });
 
-      const updatedPrompts = [...promptsList, response?.prompt];
+      const updatedPrompts = [...prompts, response?.prompt];
 
-      setPromptsList(updatedPrompts);
+      setApiPromptsList(updatedPrompts);
 
       toast.success(response?.message);
     } catch (error) {
@@ -58,8 +57,8 @@ export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex flex-col">
+    <div className="flex  flex-grow bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2 h-full">
+      <div className="flex flex-col w-full">
         <div className="flex justify-between">
           <h3 className="text-xlv font-semibold">Suggested prompts</h3>
           {user?.isOwner && (
@@ -72,13 +71,13 @@ export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
           )}
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
-        {promptsList?.length === 0 && (
+        {prompts?.length === 0 && (
           <p className="text-gray-500">
             Add example prompts and press &#34;Generate prompts&#34; button
           </p>
         )}
 
-        {promptsList?.map((prompt: Prompt) => (
+        {prompts?.map((prompt: Prompt) => (
           <PromptItem
             key={prompt?.id}
             id={prompt?.id}

@@ -20,8 +20,6 @@ export async function saveExamplePrompt({ prompt }: SavePromptProps) {
     }),
   });
 
-  console.log(response.ok);
-
   if (!response.ok) {
     throw new Error("Failed to save the prompt");
   }

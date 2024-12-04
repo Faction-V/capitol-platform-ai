@@ -21,3 +21,8 @@ export interface Member {
   id: string;
   role: string;
 }
+
+export interface Prompt {
+  id: string;
+  prompt: string;
+}

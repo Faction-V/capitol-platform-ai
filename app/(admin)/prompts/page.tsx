@@ -1,8 +1,7 @@
 import { getExamplesPrompts } from "./services/get-examples-prompts";
-import { ExamplePromptsList } from "./example-prompts-list";
-import { ApiPromptsList } from "./api-prompts-list";
 import { ToastContainer } from "react-toastify";
 import { getApiPrompts } from "./services/get-api-prompts";
+import { PromptsContainer } from "./prompts-container";
 
 interface Prompt {
   id: string;
@@ -30,17 +29,16 @@ export default async function PromptsPage() {
       id: prompt?.id,
       prompt: prompt?.prompt.prompt,
     }));
-    console.log("apiPrompts", apiPrompts);
   } catch (error) {
     console.error("Failed to get the list of prompts", error);
   }
 
   return (
     <>
-      <div className="grid grid-cols-2 w-full gap-8">
-        <ExamplePromptsList prompts={examplePrompts?.prompts} />
-        <ApiPromptsList prompts={apiPrompts} />
-      </div>
+      <PromptsContainer
+        apiPrompts={apiPrompts}
+        examplePrompts={examplePrompts?.prompts}
+      />
       <ToastContainer
         position="top-center"
         autoClose={5000}

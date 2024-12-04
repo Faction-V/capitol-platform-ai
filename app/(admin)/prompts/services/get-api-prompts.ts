@@ -10,6 +10,7 @@ export async function getApiPrompts() {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
     },
+    next: { tags: ["api-prompts"] },
   });
 
   if (!response.ok) {

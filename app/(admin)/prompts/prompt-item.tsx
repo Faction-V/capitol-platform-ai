@@ -14,7 +14,7 @@ export const PromptItem = ({ prompt, id, handleDelete }: PromptItemProps) => {
 
   return (
     <>
-      <div className="flex bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2">
+      <div className="flex justify-between items-center mb-2 w-full">
         <div className="flex flex-col justify-between leading-normal gap-2">
           <p className="font-normal text-gray-700">{prompt}</p>
         </div>

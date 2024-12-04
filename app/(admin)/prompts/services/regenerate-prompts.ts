@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 export async function regeneratePrompts() {
   const cookieStore = await cookies();
@@ -16,6 +17,8 @@ export async function regeneratePrompts() {
   if (!response.ok) {
     throw new Error("Failed to generate the list of prompts");
   }
+
+  revalidateTag("api-prompts");
 
   return await response?.json();
 }

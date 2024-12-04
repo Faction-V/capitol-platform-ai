@@ -18,15 +18,18 @@ interface Prompt {
 
 interface ExamplePromptsListProps {
   prompts: Array<Prompt>;
+  setExamplePromptsList: (prompts: Array<Prompt>) => void;
+  updateApiPromptsList: (prompts: Array<Prompt>) => void;
 }
 
 export const ExamplePromptsList = ({
   prompts = [],
+  setExamplePromptsList,
+  updateApiPromptsList,
 }: ExamplePromptsListProps) => {
   const user: User | undefined = useUser();
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
-  const [promptsList, setPromptsList] = useState(prompts);
 
   const handleSavePrompt = async (prompt: string) => {
     const trimmedPrompt = prompt.trim();
@@ -34,9 +37,9 @@ export const ExamplePromptsList = ({
     try {
       const response = await saveExamplePrompt({ prompt: trimmedPrompt });
 
-      const updatedPrompts = [...promptsList, response?.prompt];
+      const updatedPrompts = [...prompts, response?.prompt];
 
-      setPromptsList(updatedPrompts);
+      setExamplePromptsList(updatedPrompts);
 
       toast.success(response?.message);
     } catch (error) {
@@ -50,45 +53,47 @@ export const ExamplePromptsList = ({
     try {
       await deleteExamplePrompt({ id });
       toast.success("Prompt was deleted successfully");
-      const updatedPrompts = promptsList.filter((prompt) => prompt.id !== id);
+      const updatedPrompts = prompts.filter((prompt) => prompt.id !== id);
 
-      setPromptsList(updatedPrompts);
+      setExamplePromptsList(updatedPrompts);
     } catch (error) {
       toast.error((error as Error).message);
     }
   };
 
   return (
-    <div className="flex">
-      <div className="flex flex-col">
+    <div className="flex flex-grow bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2 h-full">
+      <div className="flex flex-col w-full">
         <div className="flex justify-between">
           <h3 className="text-xlv font-semibold">Example prompts</h3>
+
           {user?.isOwner && (
-            <Button
-              label="Add example prompt"
-              onClick={() => {
-                setAddPromptModalOpen(true);
-              }}
-            />
-          )}
-          {user?.isOwner && (
-            <Button
-              label="Generate prompts"
-              onClick={async () => {
-                const result = await regeneratePrompts();
-                console.log("result", result);
-              }}
-            />
+            <div className="flex gap-2">
+              <Button
+                label="Add example prompt"
+                onClick={() => {
+                  setAddPromptModalOpen(true);
+                }}
+              />
+              <Button
+                label="Generate prompts"
+                onClick={async () => {
+                  const result = await regeneratePrompts();
+
+                  updateApiPromptsList(result?.prompts);
+                }}
+              />
+            </div>
           )}
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
-        {promptsList?.length === 0 && (
+        {prompts?.length === 0 && (
           <p className="text-gray-500">
             There are no prompts associated with your account.
           </p>
         )}
 
-        {promptsList?.map((prompt: Prompt) => (
+        {prompts?.map((prompt: Prompt) => (
           <PromptItem
             key={prompt?.id}
             id={prompt?.id}
