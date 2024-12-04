@@ -4,7 +4,11 @@ import Link from "next/link";
 import { ExternalLinkIcon } from "../icons/external-link-icon";
 import { usePathname } from "next/navigation";
 
-export const Navigation = () => {
+interface NavigationProps {
+  isAdmin: boolean;
+}
+
+export const Navigation = ({ isAdmin }: NavigationProps) => {
   const pathname = usePathname();
 
   const linkClassNames =
@@ -50,6 +54,16 @@ export const Navigation = () => {
           >
             Suggested prompts
           </Link>
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className={
+                pathname === "/admin" ? selectedLinkClassNames : linkClassNames
+              }
+            >
+              Admin panel
+            </Link>
+          )}
           <a
             rel="noopener noreferrer"
             href="https://api.capitol.ai/"

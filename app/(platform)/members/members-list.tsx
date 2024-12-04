@@ -4,11 +4,19 @@ import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { MemberItem } from "./member-item";
 import { Button } from "@/app/components/button";
-import { AddMemberModal } from "./add-member-modal";
+import { AddMemberModal } from "../../components/add-member-modal";
 import { Member, User } from "../../types";
 import { useUser } from "../UserProvider";
 
-export default function MembersList({ members }: { members: Member[] }) {
+interface MembersListProps {
+  canChooseRole?: boolean;
+  members: Member[];
+}
+
+export default function MembersList({
+  members,
+  canChooseRole = false,
+}: MembersListProps) {
   const user: User | undefined = useUser();
   const [membersList, setMembersList] = useState(members);
   const [isAddUserModalOpen, setAddUserModalOpen] = useState(false);
@@ -54,7 +62,10 @@ export default function MembersList({ members }: { members: Member[] }) {
         </div>
       </div>
       {isAddUserModalOpen && (
-        <AddMemberModal setAddUserModalOpen={setAddUserModalOpen} />
+        <AddMemberModal
+          setAddUserModalOpen={setAddUserModalOpen}
+          canChooseRole={canChooseRole}
+        />
       )}
     </div>
   );
