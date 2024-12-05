@@ -8,8 +8,6 @@ export async function middleware(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
   const email = request.nextUrl.searchParams.get("email");
 
-  return NextResponse.next();
-
   // If the user is trying to validate an invitation code
   if (pathname.includes("/org/invite")) {
     const code = request.nextUrl.searchParams.get("code");
