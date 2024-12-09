@@ -16,6 +16,7 @@ interface OrganizationsListProps {
 export const OrganizationsList = ({
   organizations = [],
 }: OrganizationsListProps) => {
+  const [organizationList, setOrganizationList] = useState(organizations);
   const [isCreateOrgModalOpen, setCreateOrgModalOpen] = useState(false);
   const [isAddMemberModalOpen, setAddMemberModalOpen] = useState(false);
   const [orgId, setOrgId] = useState<string | null>(null);
@@ -27,8 +28,15 @@ export const OrganizationsList = ({
 
   const handleCreateOrg = async (name: string) => {
     try {
-      await createOrganization(name);
+      const result = await createOrganization(name);
+
+      setOrganizationList([
+        ...organizationList,
+        { id: result?.orgId, name, imageUrl: "" },
+      ]);
+
       toast.success("Organization was created successfully");
+
       setCreateOrgModalOpen(false);
     } catch (error) {
       toast.error((error as Error).message);
@@ -48,13 +56,13 @@ export const OrganizationsList = ({
           />
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
-        {organizations?.length === 0 && (
+        {organizationList?.length === 0 && (
           <p className="text-gray-500">
             No organizations found. Create one by clicking the button above.
           </p>
         )}
 
-        {organizations?.map((org: Organization) => (
+        {organizationList?.map((org: Organization) => (
           <OrganizationItem
             key={org?.id}
             handleOpenMemberModal={handleOpenMemberModal}
