@@ -6,15 +6,15 @@ export default async function MembersPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const memberId: string = (await params).id;
+  const orgId: string = (await params).id;
 
   let result = [];
 
   try {
-    result = await getAllMembersById(memberId);
+    result = await getAllMembersById(orgId);
   } catch (error) {
     console.error("Failed to get the list of api keys", error);
   }
 
-  return <MembersList members={result?.members} canChooseRole />;
+  return <MembersList members={result?.members} canChooseRole orgId={orgId} />;
 }

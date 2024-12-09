@@ -5,12 +5,16 @@ import { cookies } from "next/headers";
 interface UpdateMemberProps {
   lastName: string;
   firstName: string;
+  id: string | undefined;
 }
 
-export async function updateMember({ lastName, firstName }: UpdateMemberProps) {
+export async function updateMember({
+  lastName,
+  firstName,
+  id,
+}: UpdateMemberProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const id = cookieStore.get("user")?.value;
 
   const response = await fetch(`${proxy}/user`, {
     method: "PUT",

@@ -23,7 +23,6 @@ export const AddMemberModal = ({
 }: AddUserModalProps) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("member");
-  console.log("orgId", orgId);
 
   const handleSendInvite = async () => {
     try {

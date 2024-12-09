@@ -10,11 +10,13 @@ import { useUser } from "../UserProvider";
 interface MembersListProps {
   canChooseRole?: boolean;
   members: Member[];
+  orgId?: string;
 }
 
 export default function MembersList({
   members,
   canChooseRole = false,
+  orgId,
 }: MembersListProps) {
   const user: User | undefined = useUser();
   const [membersList, setMembersList] = useState(members);
@@ -51,6 +53,7 @@ export default function MembersList({
       </div>
       {isAddUserModalOpen && (
         <AddMemberModal
+          orgId={orgId}
           setAddUserModalOpen={setAddUserModalOpen}
           canChooseRole={canChooseRole}
         />

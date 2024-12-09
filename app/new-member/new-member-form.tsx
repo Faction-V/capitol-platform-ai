@@ -7,8 +7,11 @@ import { Button } from "../components/button";
 import { isEmptyString } from "../utils/is-empty-string";
 import { toast } from "react-toastify";
 import { updateMember } from "./services/update-member";
+import { User } from "../types";
+import { useUser } from "../(platform)/UserProvider";
 
 export const NewMemberForm = () => {
+  const user: User | undefined = useUser();
   const router = useRouter();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -16,7 +19,7 @@ export const NewMemberForm = () => {
 
   const handleSave = async () => {
     try {
-      await updateMember({ lastName, firstName });
+      await updateMember({ lastName, firstName, id: user?.id });
       router.push("/");
     } catch (error) {
       toast.error((error as Error).message);
