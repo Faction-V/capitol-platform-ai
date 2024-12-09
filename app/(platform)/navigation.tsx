@@ -19,7 +19,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
   const linkClassNames =
     "flex gap-2 my-0.5 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group";
   const selectedLinkClassNames =
-    "flex gap-2 my-0.5 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group";
+    "flex gap-2 my-0.5 bg-gray-100 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group";
 
   return (
     <aside className="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 transition-width">
@@ -56,6 +56,15 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
           </Link>
           <Link
             href="/prompts"
+            className={
+              pathname === "/prompts" ? selectedLinkClassNames : linkClassNames
+            }
+          >
+            <EditIcon size={20} />
+            Suggested prompts
+          </Link>
+          <Link
+            href="/guardrails"
             className={
               pathname === "/prompts" ? selectedLinkClassNames : linkClassNames
             }

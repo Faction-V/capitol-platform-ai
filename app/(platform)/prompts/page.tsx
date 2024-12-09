@@ -1,5 +1,4 @@
 import { getExamplesPrompts } from "./services/get-examples-prompts";
-import { ToastContainer } from "react-toastify";
 import { getApiPrompts } from "./services/get-api-prompts";
 import { PromptsContainer } from "./prompts-container";
 
@@ -38,17 +37,6 @@ export default async function PromptsPage() {
       <PromptsContainer
         apiPrompts={apiPrompts}
         examplePrompts={examplePrompts?.prompts}
-      />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        pauseOnHover
-        theme="light"
       />
     </>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
 import { MemberItem } from "./member-item";
 import { Button } from "@/app/components/button";
 import { AddMemberModal } from "../../components/add-member-modal";
@@ -28,17 +27,6 @@ export default function MembersList({
 
   return (
     <div className="mb-4 w-full">
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        pauseOnHover
-        theme="light"
-      />
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">Members</h3>
