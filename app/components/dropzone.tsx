@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { ImageIcon } from "@/app/icons/image-icon";
-import { updateOrgLogo } from "../(admin)/organization/services/upload-org-logo";
+import { updateOrgLogo } from "../(platform)/organization/services/upload-org-logo";
 
 interface DropzoneProps {
   handleUpload: (image: string) => void;

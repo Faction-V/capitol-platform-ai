@@ -3,21 +3,38 @@
 import { cookies } from "next/headers";
 
 interface SendInviteProps {
+  organizationId?: string | null;
   email: string;
+  role?: string;
+  canChooseRole?: boolean;
 }
 
-export async function sendInvite({ email }: SendInviteProps) {
+export async function sendInvite({
+  email,
+  role,
+  canChooseRole,
+  organizationId,
+}: SendInviteProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
+  const body: SendInviteProps = {
+    email,
+  };
+
+  if (canChooseRole) {
+    body.role = role;
+    body.organizationId = organizationId;
+  }
+
+  console.log("body", body);
+
   const response = await fetch(`${proxy}/org/member/invite`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
     },
-    body: JSON.stringify({
-      email,
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {

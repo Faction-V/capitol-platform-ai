@@ -2,32 +2,23 @@
 
 import { cookies } from "next/headers";
 
-interface UpdateMemberProps {
-  lastName: string;
-  firstName: string;
-  id: string | undefined;
-}
-
-export async function updateMember({
-  lastName,
-  firstName,
-  id,
-}: UpdateMemberProps) {
+export async function createOrganization(name: string) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-
-  const response = await fetch(`${proxy}/user`, {
-    method: "PUT",
+  const response = await fetch(`${proxy}/org`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
     },
     body: JSON.stringify({
-      lastName,
-      firstName,
-      id,
+      name: name,
     }),
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to create organization");
+  }
 
   return await response?.json();
 }

@@ -54,6 +54,7 @@ export async function middleware(request: NextRequest) {
     isOwner: user?.orgInfo?.role === "owner",
     orgName: user?.orgInfo?.name,
     orgLogo: user?.orgInfo?.imageUrl,
+    isAdmin: user?.typeName === "Admin",
   };
 
   // If the user is authenticated, continue as normal
@@ -63,6 +64,10 @@ export async function middleware(request: NextRequest) {
     }
 
     if (pathname === "/login") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    if (pathname === "/admin" && !userData.isAdmin) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 

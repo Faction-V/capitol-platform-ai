@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { EditKeyModal } from "./edit-key-modal";
-import { ToastContainer } from "react-toastify";
 import { KeyItem } from "./key-item";
 import { Key, User } from "../../types";
 import { Button } from "@/app/components/button";
@@ -55,17 +54,6 @@ export default function KeysList({ keys }: KeysListProps) {
 
   return (
     <div className="mb-4 w-full">
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        pauseOnHover
-        theme="light"
-      />
       <div className="flow-root">
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">API keys</h3>

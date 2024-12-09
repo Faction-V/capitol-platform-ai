@@ -11,6 +11,7 @@ export interface User {
   firstName: string;
   lastName: string;
   isOwner: boolean;
+  isAdmin: boolean;
   orgName: string;
   orgLogo: string;
 }
@@ -25,4 +26,10 @@ export interface Member {
 export interface Prompt {
   id: string;
   prompt: string;
+}
+
+export interface Organization {
+  id: string;
+  name: string;
+  imageUrl: string;
 }
