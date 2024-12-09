@@ -6,14 +6,14 @@ import { Organization } from "../../types";
 import { CapitolIcon } from "../../icons/capitol-icon";
 
 interface OrganizationItemProps extends Organization {
-  setAddMemberModalOpen: (isModalOpen: boolean) => void;
+  handleOpenMemberModal: (id: string) => void;
 }
 
 export const OrganizationItem = ({
   id,
   name,
   imageUrl,
-  setAddMemberModalOpen,
+  handleOpenMemberModal,
 }: OrganizationItemProps) => {
   const router = useRouter();
 
@@ -35,7 +35,7 @@ export const OrganizationItem = ({
         <Button
           label="Add member"
           onClick={() => {
-            setAddMemberModalOpen(true);
+            handleOpenMemberModal(id);
           }}
         />
         <Button

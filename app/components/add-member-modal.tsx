@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Input } from "./input";
 import { Button } from "./button";
@@ -9,20 +9,32 @@ import { sendInvite } from "../(platform)/members/service/send-invite";
 import "react-toastify/dist/ReactToastify.css";
 
 interface AddUserModalProps {
+  orgId?: string | null;
   canChooseRole?: boolean;
+  setOrgId: (orgId: null) => void;
   setAddUserModalOpen: (isModalOpen: boolean) => void;
 }
 
 export const AddMemberModal = ({
+  setOrgId,
+  orgId,
   setAddUserModalOpen,
   canChooseRole = false,
 }: AddUserModalProps) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("member");
+  console.log("orgId", orgId);
 
   const handleSendInvite = async () => {
     try {
-      const response = await sendInvite({ email, role, canChooseRole });
+      const response = await sendInvite({
+        email,
+        role,
+        canChooseRole,
+        organizationId: orgId,
+      });
+
+      console.log("response", response);
 
       if (response?.code === "invitation-sent") {
         toast.success(response?.message);
@@ -34,6 +46,8 @@ export const AddMemberModal = ({
     }
 
     setAddUserModalOpen(false);
+
+    setOrgId(null);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -83,7 +97,7 @@ export const AddMemberModal = ({
                 <div className="mb-3">
                   <div className="flex items-center mb-4">
                     <input
-                      checked={role === "owner"}
+                      defaultChecked={role === "owner"}
                       onClick={() => setRole("owner")}
                       id="default-radio-1"
                       type="radio"
@@ -101,7 +115,7 @@ export const AddMemberModal = ({
                   <div className="flex items-center">
                     <input
                       onClick={() => setRole("member")}
-                      checked={role === "member"}
+                      defaultChecked={role === "member"}
                       id="default-radio-2"
                       type="radio"
                       value="member"

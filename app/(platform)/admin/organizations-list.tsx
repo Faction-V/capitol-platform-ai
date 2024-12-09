@@ -18,6 +18,12 @@ export const OrganizationsList = ({
 }: OrganizationsListProps) => {
   const [isCreateOrgModalOpen, setCreateOrgModalOpen] = useState(false);
   const [isAddMemberModalOpen, setAddMemberModalOpen] = useState(false);
+  const [orgId, setOrgId] = useState<string | null>(null);
+
+  const handleOpenMemberModal = (id: string) => {
+    setAddMemberModalOpen(true);
+    setOrgId(id);
+  };
 
   const handleCreateOrg = async (name: string) => {
     try {
@@ -51,7 +57,7 @@ export const OrganizationsList = ({
         {organizations?.map((org: Organization) => (
           <OrganizationItem
             key={org?.id}
-            setAddMemberModalOpen={setAddMemberModalOpen}
+            handleOpenMemberModal={handleOpenMemberModal}
             {...org}
           />
         ))}
@@ -64,6 +70,8 @@ export const OrganizationsList = ({
       )}
       {isAddMemberModalOpen && (
         <AddMemberModal
+          orgId={orgId}
+          setOrgId={setOrgId}
           setAddUserModalOpen={setAddMemberModalOpen}
           canChooseRole
         />
