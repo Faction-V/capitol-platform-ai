@@ -8,6 +8,7 @@ import { UsersIcon } from "../icons/users-icon";
 import { SettingsIcon } from "../icons/settings-icon";
 import { EditIcon } from "../icons/edit-icon";
 import { CodeBrowserIcon } from "../icons/code-browser-icon";
+import { ShieldIcon } from "../icons/shield-icon";
 
 interface NavigationProps {
   isAdmin: boolean;
@@ -69,8 +70,8 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
               pathname === "/prompts" ? selectedLinkClassNames : linkClassNames
             }
           >
-            <EditIcon size={20} />
-            Suggested prompts
+            <ShieldIcon size={20} />
+            Guardrails
           </Link>
           {isAdmin && (
             <Link
