@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useEffect } from "react";
+import { useState, KeyboardEvent } from "react";
 import { toast } from "react-toastify";
 import { Input } from "./input";
 import { Button } from "./button";
@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 interface AddUserModalProps {
   orgId?: string | null;
   canChooseRole?: boolean;
-  setOrgId: (orgId: null) => void;
+  setOrgId?: (orgId: null) => void;
   setAddUserModalOpen: (isModalOpen: boolean) => void;
 }
 
@@ -47,7 +47,9 @@ export const AddMemberModal = ({
 
     setAddUserModalOpen(false);
 
-    setOrgId(null);
+    if (setOrgId) {
+      setOrgId(null);
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
