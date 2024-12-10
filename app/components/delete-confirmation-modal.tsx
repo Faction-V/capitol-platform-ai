@@ -1,4 +1,3 @@
-import "react-toastify/dist/ReactToastify.css";
 import { TrashIcon } from "../icons/trash-icon";
 import { Button } from "./button";
 import { Modal } from "./modal";

@@ -4,6 +4,7 @@ import { CapitolIcon } from "@/app/icons/capitol-icon";
 import { SignOutButton } from "./sign-out-button";
 import { Navigation } from "./navigation";
 import { User } from "../types";
+import { UserProvider } from "./UserProvider";
 
 export default async function MainLayout({
   children,
@@ -44,7 +45,9 @@ export default async function MainLayout({
       <div className="flex pt-16 overflow-hidden bg-gray-50 h-full">
         <Navigation isAdmin={isAdmin} />
         <div className="relative w-full h-full overflow-y-auto bg-gray-50 ml-64">
-          <div className="flex p-6 w-full">{children}</div>
+          <div className="flex p-6 w-full">
+            <UserProvider user={user}>{children}</UserProvider>
+          </div>
         </div>
       </div>
     </>
