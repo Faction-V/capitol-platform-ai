@@ -1,5 +1,5 @@
 import MembersList from "../members-list";
-import { getAllMembersById } from "../service/get-all-members-by-id";
+import { getAllMembersById } from "../services/get-all-members-by-id";
 
 export default async function MembersPage({
   params,

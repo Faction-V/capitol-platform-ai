@@ -33,3 +33,12 @@ export interface Organization {
   name: string;
   imageUrl: string;
 }
+
+export interface GuardrailsConfig {
+  id: string;
+  name: string;
+  guardrailDescription: string;
+  passCriteria: string;
+  failCriteria: string;
+  examples: string;
+}

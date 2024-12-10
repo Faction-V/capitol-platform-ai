@@ -5,8 +5,7 @@ import { Button } from "./button";
 import { Modal } from "./modal";
 import { UserPlusIcon } from "../icons/user-plus-icon";
 import { isEmptyString } from "../utils/is-empty-string";
-import { sendInvite } from "../(platform)/members/service/send-invite";
-import "react-toastify/dist/ReactToastify.css";
+import { sendInvite } from "../(platform)/members/services/send-invite";
 
 interface AddUserModalProps {
   orgId?: string | null;

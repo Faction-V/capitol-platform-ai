@@ -4,7 +4,7 @@ import { Button } from "@/app/components/button";
 import { Member } from "../../types";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
 import { toast } from "react-toastify";
-import { removeMember } from "./service/remove-member";
+import { removeMember } from "./services/remove-member";
 import { isEmptyString } from "../../utils/is-empty-string";
 import { colors } from "./colors";
 
