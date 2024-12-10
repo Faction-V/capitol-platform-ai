@@ -3,7 +3,6 @@ import { ReactNode } from "react";
 import { CapitolIcon } from "@/app/icons/capitol-icon";
 import { SignOutButton } from "./sign-out-button";
 import { Navigation } from "./navigation";
-import { UserProvider } from "./UserProvider";
 import { User } from "../types";
 
 export default async function MainLayout({
@@ -45,9 +44,7 @@ export default async function MainLayout({
       <div className="flex pt-16 overflow-hidden bg-gray-50 h-full">
         <Navigation isAdmin={isAdmin} />
         <div className="relative w-full h-full overflow-y-auto bg-gray-50 ml-64">
-          <div className="flex p-6 w-full">
-            <UserProvider user={user}>{children}</UserProvider>
-          </div>
+          <div className="flex p-6 w-full">{children}</div>
         </div>
       </div>
     </>

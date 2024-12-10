@@ -9,6 +9,12 @@ interface SendInviteProps {
   canChooseRole?: boolean;
 }
 
+interface BodyProps {
+  email: string;
+  role?: string;
+  "organization-id"?: string | null;
+}
+
 export async function sendInvite({
   email,
   role,
@@ -17,16 +23,14 @@ export async function sendInvite({
 }: SendInviteProps) {
   const cookieStore = await cookies();
   const proxy = process.env.CLJ_API_BASE_URL;
-  const body: SendInviteProps = {
+  const body: BodyProps = {
     email,
   };
 
   if (canChooseRole) {
     body.role = role;
-    body.organizationId = organizationId;
+    body["organization-id"] = organizationId;
   }
-
-  console.log("body", body);
 
   const response = await fetch(`${proxy}/org/member/invite`, {
     method: "POST",
