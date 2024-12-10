@@ -10,7 +10,5 @@ export default async function GuardrailsPage() {
     console.error("Failed to get the list of api keys", error);
   }
 
-  console.log(result);
-
   return <GuardrailsList configs={result} />;
 }

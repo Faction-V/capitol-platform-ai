@@ -32,8 +32,6 @@ export const AddMemberModal = ({
         organizationId: orgId,
       });
 
-      console.log("response", response);
-
       if (response?.code === "invitation-sent") {
         toast.success(response?.message);
       } else {
