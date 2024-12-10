@@ -4,7 +4,6 @@ import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
 import { PlusIcon } from "../../icons/plus-icon";
 import { isEmptyString } from "../../utils/is-empty-string";
-import "react-toastify/dist/ReactToastify.css";
 import { Input } from "../../components/input";
 
 interface CreateOrganizationModalProps {

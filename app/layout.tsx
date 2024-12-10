@@ -1,11 +1,9 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 import { ToastContainer } from "react-toastify";
-import { headers } from "next/headers";
-import { User } from "./types";
-import { UserProvider } from "./(platform)/UserProvider";
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,16 +25,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const headersList = await headers();
-  const userString: string = headersList.get("user") || "";
-  const user: User = JSON.parse(userString);
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
-        <UserProvider user={user}>{children}</UserProvider>
+        {children}
         <ToastContainer
           position="top-center"
           autoClose={5000}
