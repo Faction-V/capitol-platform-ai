@@ -1,4 +1,5 @@
 import { KeyboardEvent, useState } from "react";
+import { toast } from "react-toastify";
 import { EditIcon } from "../../icons/edit-icon";
 import { TrashIcon } from "../../icons/trash-icon";
 import { DeleteConfirmationModal } from "../../components/delete-confirmation-modal";
@@ -7,13 +8,14 @@ import { Button } from "@/app/components/button";
 import { EditCell } from "./edit-cell";
 import { createGuardrailsConfig } from "./services/create-guardrails-config";
 import { updateGuardrailsConfigs } from "./services/update-guardrails-config";
-import { toast } from "react-toastify";
+import { deleteGuardrailsConfig } from "./services/delete-guardrails-config";
 
 interface GuardrailsItem extends GuardrailsConfig {
   isOwner: boolean | undefined;
   isEditModeState?: boolean;
   addNewConfig?: (config: GuardrailsConfig) => void;
   handleUpdateConfig?: (config: GuardrailsConfig) => void;
+  deleteConfig?: (id: string) => void;
 }
 
 export const GuardrailsItem = ({
@@ -27,6 +29,7 @@ export const GuardrailsItem = ({
   isEditModeState = false,
   addNewConfig,
   handleUpdateConfig,
+  deleteConfig,
 }: GuardrailsItem) => {
   const [isEditMode, setIsEditMode] = useState(isEditModeState);
   const [nameValue, setNameValue] = useState(name);
@@ -35,6 +38,7 @@ export const GuardrailsItem = ({
   const [examplesValue, setExamplesValue] = useState(examples);
   const [failCriteriaValue, setFailCriteriaValue] = useState(failCriteria);
   const [passCriteriaValue, setPassCriteriaValue] = useState(passCriteria);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -93,6 +97,12 @@ export const GuardrailsItem = ({
     }
   };
 
+  const handleDelete = async () => {
+    await deleteGuardrailsConfig(id);
+    deleteConfig?.(id);
+    toast.success("Config was deleted successfully");
+  };
+
   return (
     <tr className="bg-white border-b last:border-none">
       <EditCell
@@ -140,11 +150,21 @@ export const GuardrailsItem = ({
                 <Button
                   label={<TrashIcon />}
                   type="secondary"
-                  onClick={() => {}}
+                  onClick={() => setIsConfirmationModalOpen(true)}
                 />
               </>
             )}
           </div>
+        )}
+
+        {isConfirmationModalOpen && (
+          <DeleteConfirmationModal
+            title="Delete config"
+            description="Are you sure you want to delete the config? This action cannot be undone."
+            buttonLabel="Delete config"
+            handleDelete={handleDelete}
+            handleCancel={() => setIsConfirmationModalOpen(false)}
+          />
         )}
       </td>
     </tr>

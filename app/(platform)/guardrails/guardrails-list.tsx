@@ -20,6 +20,11 @@ export default function GuardrailsList({ configs }: GuardrailsListProps) {
     setIsAddNewConfigState(false);
   };
 
+  const deleteConfig = (id: string) => {
+    const updatedConfigs = configsList.filter((item) => item.id !== id);
+    setConfigsList(updatedConfigs);
+  };
+
   const handleUpdateConfig = (config: GuardrailsConfig) => {
     const updatedConfigs = configsList.map((item) => {
       if (item.id === config.id) {
@@ -80,6 +85,8 @@ export default function GuardrailsList({ configs }: GuardrailsListProps) {
 
               {configsList.map((item) => (
                 <GuardrailsItem
+                  deleteConfig={deleteConfig}
+                  handleUpdateConfig={handleUpdateConfig}
                   isOwner={user?.isOwner}
                   key={item?.id}
                   {...item}
