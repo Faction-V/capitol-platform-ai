@@ -11,12 +11,12 @@ interface ButtonProps {
 }
 
 const primaryButtonClassnames =
-  "flex justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center";
+  "flex justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
 const secondaryButtonClassnames =
-  "flex px-2.5 justify-center py-1.5 text-sm font-medium text-primary-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-950 focus:z-10 focus:ring-4 focus:ring-gray-100";
+  "flex px-2.5 justify-center py-1.5 text-sm font-medium text-primary-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-950 focus:z-10 focus:ring-4 focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
 
 const secondaryButtonWithIconClassnames =
-  "flex py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100";
+  "flex py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
 
 export const Button = ({
   onClick,
@@ -24,7 +24,7 @@ export const Button = ({
   label,
   disabled = false,
   customClassName = "",
-  isLoading = true,
+  isLoading = false,
 }: ButtonProps) => {
   const buttonClassnames =
     type === "primary"

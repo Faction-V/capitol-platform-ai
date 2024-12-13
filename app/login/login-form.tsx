@@ -10,6 +10,7 @@ export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isOtpVisible, setIsOtpVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const buttonLabel = isOtpVisible ? "Log in" : "Get OTP code";
@@ -19,15 +20,16 @@ export const LoginForm = () => {
       if (!email || !code) {
         return;
       }
-
+      setIsLoading(true);
       await validateOtp({ email, code });
       router.push("/");
     } else {
       if (!email) {
         return;
       }
-
+      setIsLoading(true);
       await getOtp(email);
+      setIsLoading(false);
       setIsOtpVisible(true);
     }
   };
@@ -73,6 +75,7 @@ export const LoginForm = () => {
           )}
         </div>
         <Button
+          isLoading={isLoading}
           label={buttonLabel}
           onClick={handleButtonClick}
           customClassName="w-full"
