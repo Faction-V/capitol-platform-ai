@@ -1,20 +1,22 @@
 import { MouseEvent, ReactNode } from "react";
+import { Spinner } from "@/app/components/spinner";
 
 interface ButtonProps {
   disabled?: boolean;
+  isLoading?: boolean;
   label: string | ReactNode;
   customClassName?: string;
   type?: "primary" | "secondary";
   onClick: () => void;
 }
 
-const primaryButtonClassnames =
-  "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center";
-const secondaryButtonClassnames =
-  "px-2.5 py-1.5 text-sm font-medium text-primary-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-950 focus:z-10 focus:ring-4 focus:ring-gray-100";
+const defaultButtonClassnames =
+  "flex justify-center items-center px-2.5 py-1.5 focus:ring-4 font-medium rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
 
-const secondaryButtonWithIconClassnames =
-  "py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100";
+const primaryButtonClassnames = `${defaultButtonClassnames} text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 text-center`;
+const secondaryButtonClassnames = `${defaultButtonClassnames} text-primary-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-primary-950 focus:z-10 focus:ring-gray-100`;
+
+const secondaryButtonWithIconClassnames = `${defaultButtonClassnames} font-medium bg-white border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-gray-100`;
 
 export const Button = ({
   onClick,
@@ -22,6 +24,7 @@ export const Button = ({
   label,
   disabled = false,
   customClassName = "",
+  isLoading = false,
 }: ButtonProps) => {
   const buttonClassnames =
     type === "primary"
@@ -32,7 +35,7 @@ export const Button = ({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={(event: MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         onClick();
@@ -40,7 +43,13 @@ export const Button = ({
       type="button"
       className={`${buttonClassnames} ${customClassName}`}
     >
-      {label}
+      {typeof label === "string" && isLoading && (
+        <div className="flex gap-2">
+          <Spinner /> {label}
+        </div>
+      )}
+      {typeof label !== "string" && isLoading && <Spinner />}
+      {!isLoading && label}
     </button>
   );
 };

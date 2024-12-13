@@ -23,8 +23,10 @@ export const ApiPromptsList = ({
   const user: User | undefined = useUser();
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async (id: string) => {
+    setIsLoading(true);
     try {
       await deleteApiPrompt({ id });
       toast.success("Prompt was deleted successfully");
@@ -34,11 +36,12 @@ export const ApiPromptsList = ({
     } catch (error) {
       toast.error((error as Error).message);
     }
+    setIsLoading(false);
   };
 
   const handleSavePrompt = async (prompt: string) => {
     const trimmedPrompt = prompt.trim();
-
+    setIsLoading(true);
     try {
       const response = await saveApiPromptPropsPrompt({
         prompt: trimmedPrompt,
@@ -52,7 +55,7 @@ export const ApiPromptsList = ({
     } catch (error) {
       toast.error((error as Error).message);
     }
-
+    setIsLoading(false);
     setAddPromptModalOpen(false);
   };
 
@@ -88,6 +91,7 @@ export const ApiPromptsList = ({
       </div>
       {isAddPromptModalOpen && (
         <AddPromptModal
+          isLoading={isLoading}
           setAddPromptModalOpen={setAddPromptModalOpen}
           handleSavePrompt={handleSavePrompt}
         />

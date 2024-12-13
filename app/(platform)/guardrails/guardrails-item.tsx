@@ -39,6 +39,7 @@ export const GuardrailsItem = ({
   const [failCriteriaValue, setFailCriteriaValue] = useState(failCriteria);
   const [passCriteriaValue, setPassCriteriaValue] = useState(passCriteria);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -47,6 +48,7 @@ export const GuardrailsItem = ({
   };
 
   const saveConfig = async () => {
+    setIsLoading(true);
     const result = await createGuardrailsConfig({
       name: nameValue,
       description: guardrailDescriptionValue,
@@ -56,6 +58,7 @@ export const GuardrailsItem = ({
     });
 
     toast.success("Config was created successfully");
+    setIsLoading(false);
 
     if (addNewConfig) {
       addNewConfig(result);
@@ -65,6 +68,7 @@ export const GuardrailsItem = ({
   };
 
   const updateConfig = async () => {
+    setIsLoading(true);
     await updateGuardrailsConfigs({
       name: nameValue,
       description: guardrailDescriptionValue,
@@ -85,6 +89,7 @@ export const GuardrailsItem = ({
       });
     }
     setIsEditMode(false);
+    setIsLoading(false);
 
     toast.success("Config was updated successfully");
   };
@@ -98,9 +103,11 @@ export const GuardrailsItem = ({
   };
 
   const handleDelete = async () => {
+    setIsLoading(true);
     await deleteGuardrailsConfig(id);
     deleteConfig?.(id);
     toast.success("Config was deleted successfully");
+    setIsLoading(false);
   };
 
   return (
@@ -139,7 +146,11 @@ export const GuardrailsItem = ({
         {isOwner && (
           <div className="flex gap-2 items-start">
             {isEditMode ? (
-              <Button label="Save" onClick={handleSaveNewConfig} />
+              <Button
+                isLoading={isLoading}
+                label="Save"
+                onClick={handleSaveNewConfig}
+              />
             ) : (
               <>
                 <Button
@@ -159,6 +170,7 @@ export const GuardrailsItem = ({
 
         {isConfirmationModalOpen && (
           <DeleteConfirmationModal
+            isLoading={isLoading}
             title="Delete config"
             description="Are you sure you want to delete the config? This action cannot be undone."
             buttonLabel="Delete config"

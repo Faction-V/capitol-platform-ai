@@ -7,11 +7,13 @@ import { isEmptyString } from "../../utils/is-empty-string";
 import { Textarea } from "../../components/textarea";
 
 interface AddPromptModalProps {
+  isLoading?: boolean;
   setAddPromptModalOpen: (isModalOpen: boolean) => void;
   handleSavePrompt: (prompt: string) => void;
 }
 
 export const AddPromptModal = ({
+  isLoading = false,
   setAddPromptModalOpen,
   handleSavePrompt,
 }: AddPromptModalProps) => {
@@ -60,6 +62,7 @@ export const AddPromptModal = ({
         <Button
           disabled={isEmptyString(prompt)}
           label="Save"
+          isLoading={isLoading}
           onClick={() => handleSavePrompt(prompt)}
         />
         <Button

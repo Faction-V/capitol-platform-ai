@@ -13,6 +13,7 @@ interface OrganizationLogoProps {
 export const OrganizationLogo = ({ logoUrl }: OrganizationLogoProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [image, setImage] = useState<string>(logoUrl);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpload = (imageUrl: string) => {
     setImage(imageUrl);
@@ -24,13 +25,14 @@ export const OrganizationLogo = ({ logoUrl }: OrganizationLogoProps) => {
       <div className="flex justify-between w-full">
         <div className="text-gray-900">Organization logo</div>
         <Button
+          isLoading={isLoading}
           label={<EditIcon size={16} />}
           onClick={() => setIsEditMode(true)}
           type="secondary"
         />
       </div>
       {isEditMode ? (
-        <Dropzone handleUpload={handleUpload} />
+        <Dropzone handleUpload={handleUpload} setIsLoading={setIsLoading} />
       ) : (
         <img src={image} alt="" className="h-10 w-10 object-cover rounded-md" />
       )}

@@ -14,6 +14,7 @@ interface OrganizationNameProps {
 export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
   const [name, setName] = useState(orgName);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSaveName = async () => {
     const trimmedName = name.trim();
@@ -22,13 +23,14 @@ export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
       return;
     }
 
+    setIsLoading(true);
     try {
       await updateOrgName({ name: trimmedName });
     } catch (error) {
       console.error(error);
     }
-
     setIsEditMode(false);
+    setIsLoading(false);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -58,7 +60,11 @@ export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
             customClassName="max-w-80"
           />
           <div className="flex gap-1.5">
-            <Button label="Save" onClick={handleSaveName} />
+            <Button
+              isLoading={isLoading}
+              label="Save"
+              onClick={handleSaveName}
+            />
             <Button
               label="Cancel"
               onClick={() => {

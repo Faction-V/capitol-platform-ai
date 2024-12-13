@@ -15,10 +15,12 @@ export const NewMemberForm = () => {
   const router = useRouter();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const isDisabled = isEmptyString(lastName) || isEmptyString(firstName);
 
   const handleSave = async () => {
     try {
+      setIsLoading(true);
       await updateMember({
         lastName,
         firstName,
@@ -28,6 +30,7 @@ export const NewMemberForm = () => {
     } catch (error) {
       console.error("error", error);
       toast.error("An error occurred. Please try again later.");
+      setIsLoading(false);
     }
   };
 
@@ -76,9 +79,9 @@ export const NewMemberForm = () => {
               id="last_name"
             />
           </div>
-
           <Button
             label="Save"
+            isLoading={isLoading}
             onClick={handleSave}
             disabled={isDisabled}
             customClassName="w-full"

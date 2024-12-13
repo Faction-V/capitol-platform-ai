@@ -38,29 +38,36 @@ export const EditKeyModal = ({
 }: NameModalProps) => {
   const [name, setName] = useState(keyName);
   const [domain, setDomain] = useState(keyDomain);
+  const [isLoading, setIsLoading] = useState(false);
   const title = isEdit ? "Edit API key" : "Add new API key";
 
   const createKey = async () => {
     try {
+      setIsLoading(true);
       const result = await createApiKey({ name, domain });
+      setIsLoading(false);
       if (addKey) {
         addKey(result);
       }
       toast.success("Key was created successfully");
     } catch (error) {
+      setIsLoading(false);
       toast.error((error as Error).message);
     }
   };
 
   const renameKey = async () => {
     try {
+      setIsLoading(true);
       await editApiKey({ id: keyId, name: name, domain });
+      setIsLoading(false);
       if (editKey) {
         editKey({ id: keyId, name, domain });
       }
       toast.success("Key was renamed successfully");
     } catch (error) {
       toast.error((error as Error).message);
+      setIsLoading(false);
     }
   };
 
@@ -135,7 +142,8 @@ export const EditKeyModal = ({
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
         <Button
-          disabled={isEmptyString(name)}
+          isLoading={isLoading}
+          disabled={isEmptyString(name) || isLoading}
           label="Save"
           onClick={handleSave}
         />
