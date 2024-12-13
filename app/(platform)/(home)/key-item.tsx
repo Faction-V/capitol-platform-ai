@@ -33,15 +33,18 @@ export const KeyItem = ({
 }: KeyItemProps) => {
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
     try {
+      setIsLoading(true);
       await deleteApiKey({ id });
       deleteKey(id);
       toast.success("Key was deleted successfully");
     } catch (error) {
       toast.error((error as Error).message);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -69,6 +72,7 @@ export const KeyItem = ({
       </div>
       {isConfirmationModalOpen && (
         <DeleteConfirmationModal
+          isLoading={isLoading}
           title="Delete API key"
           description="Are you sure you want to delete the key? This action cannot be undone."
           buttonLabel="Delete key"

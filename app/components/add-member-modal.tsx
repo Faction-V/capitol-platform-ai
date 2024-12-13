@@ -22,9 +22,11 @@ export const AddMemberModal = ({
 }: AddUserModalProps) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("member");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSendInvite = async () => {
     try {
+      setIsLoading(true);
       const response = await sendInvite({
         email,
         role,
@@ -40,8 +42,8 @@ export const AddMemberModal = ({
     } catch (error) {
       toast.error((error as Error).message);
     }
-
     setAddUserModalOpen(false);
+    setIsLoading(false);
 
     if (setOrgId) {
       setOrgId(null);
@@ -135,6 +137,7 @@ export const AddMemberModal = ({
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
         <Button
+          isLoading={isLoading}
           disabled={isEmptyString(email)}
           label="Send invite"
           onClick={handleSendInvite}

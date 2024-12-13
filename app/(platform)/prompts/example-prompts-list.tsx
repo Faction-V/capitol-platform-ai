@@ -30,9 +30,12 @@ export const ExamplePromptsList = ({
   const user: User | undefined = useUser();
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGeneratingPrompts, setIsGeneratingPrompts] = useState(false);
 
   const handleSavePrompt = async (prompt: string) => {
     const trimmedPrompt = prompt.trim();
+    setIsLoading(true);
 
     try {
       const response = await saveExamplePrompt({ prompt: trimmedPrompt });
@@ -46,10 +49,12 @@ export const ExamplePromptsList = ({
       toast.error((error as Error).message);
     }
 
+    setIsLoading(false);
     setAddPromptModalOpen(false);
   };
 
   const handleDelete = async (id: string) => {
+    setIsLoading(true);
     try {
       await deleteExamplePrompt({ id });
       toast.success("Prompt was deleted successfully");
@@ -59,6 +64,7 @@ export const ExamplePromptsList = ({
     } catch (error) {
       toast.error((error as Error).message);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -76,10 +82,12 @@ export const ExamplePromptsList = ({
                 }}
               />
               <Button
+                isLoading={isGeneratingPrompts}
                 label="Generate prompts"
                 onClick={async () => {
+                  setIsGeneratingPrompts(true);
                   const result = await regeneratePrompts();
-
+                  setIsGeneratingPrompts(false);
                   updateApiPromptsList(result?.prompts);
                 }}
               />
@@ -104,6 +112,7 @@ export const ExamplePromptsList = ({
       </div>
       {isAddPromptModalOpen && (
         <AddPromptModal
+          isLoading={isLoading}
           setAddPromptModalOpen={setAddPromptModalOpen}
           handleSavePrompt={handleSavePrompt}
         />

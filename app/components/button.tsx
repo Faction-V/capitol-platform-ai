@@ -10,13 +10,13 @@ interface ButtonProps {
   onClick: () => void;
 }
 
-const primaryButtonClassnames =
-  "flex justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
-const secondaryButtonClassnames =
-  "flex px-2.5 justify-center py-1.5 text-sm font-medium text-primary-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-950 focus:z-10 focus:ring-4 focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
+const defaultButtonClassnames =
+  "flex justify-center items-center px-2.5 py-1.5 focus:ring-4 font-medium rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
 
-const secondaryButtonWithIconClassnames =
-  "flex py-1.5 px-1.5 text-sm font-medium focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-4 focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none";
+const primaryButtonClassnames = `${defaultButtonClassnames} text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 text-center`;
+const secondaryButtonClassnames = `${defaultButtonClassnames} text-primary-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-primary-950 focus:z-10 focus:ring-gray-100`;
+
+const secondaryButtonWithIconClassnames = `${defaultButtonClassnames} font-medium bg-white border border-gray-200 hover:bg-gray-200 focus:z-10 focus:ring-gray-100`;
 
 export const Button = ({
   onClick,
@@ -35,7 +35,7 @@ export const Button = ({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={(event: MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         onClick();

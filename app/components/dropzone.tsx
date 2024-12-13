@@ -6,13 +6,16 @@ import { ImageIcon } from "@/app/icons/image-icon";
 import { updateOrgLogo } from "../(platform)/organization/services/upload-org-logo";
 
 interface DropzoneProps {
+  setIsLoading: (isLoading: boolean) => void;
   handleUpload: (image: string) => void;
 }
 
-export const Dropzone = ({ handleUpload }: DropzoneProps) => {
+export const Dropzone = ({ handleUpload, setIsLoading }: DropzoneProps) => {
   const onDropAccepted = useCallback(async (acceptedFiles: File[]) => {
+    setIsLoading(true);
     const result = await updateOrgLogo({ file: acceptedFiles[0] });
     handleUpload(result?.url);
+    setIsLoading(false);
   }, []);
   const { getRootProps, getInputProps } = useDropzone({
     onDropAccepted,

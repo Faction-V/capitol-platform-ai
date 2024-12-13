@@ -25,17 +25,20 @@ export const MemberItem = ({
 
   const [firstName, lastName] = name.trim().split(/\s+/);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const colorClassname = colors[lastName[0].toLowerCase()];
 
   const handleDelete = async () => {
     try {
+      setIsLoading(true);
       await removeMember({ id });
       updateMembersAfterRemove(id);
       toast.success("Member was removed from organization successfully");
     } catch (error) {
       toast.error((error as Error).message);
     }
+    setIsLoading(false);
     setIsConfirmationModalOpen(false);
   };
 
@@ -70,6 +73,7 @@ export const MemberItem = ({
 
       {isConfirmationModalOpen && (
         <DeleteConfirmationModal
+          isLoading={isLoading}
           title="Remove member from organization"
           description="Are you sure you want to remove this member from the organization?"
           buttonLabel="Remove member"

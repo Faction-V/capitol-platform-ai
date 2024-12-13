@@ -67,7 +67,9 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
           <Link
             href="/guardrails"
             className={
-              pathname === "/prompts" ? selectedLinkClassNames : linkClassNames
+              pathname === "/guardrails"
+                ? selectedLinkClassNames
+                : linkClassNames
             }
           >
             <ShieldIcon size={20} />
