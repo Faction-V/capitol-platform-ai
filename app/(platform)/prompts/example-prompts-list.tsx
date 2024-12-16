@@ -67,6 +67,18 @@ export const ExamplePromptsList = ({
     setIsLoading(false);
   };
 
+  const handleRegeneratePrompts = async () => {
+    setIsGeneratingPrompts(true);
+    try {
+      const result = await regeneratePrompts();
+      updateApiPromptsList(result?.prompts);
+      toast.success("Key was created successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+    setIsGeneratingPrompts(false);
+  };
+
   return (
     <div className="flex flex-grow bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2 h-full">
       <div className="flex flex-col w-full">
@@ -84,12 +96,7 @@ export const ExamplePromptsList = ({
               <Button
                 isLoading={isGeneratingPrompts}
                 label="Generate prompts"
-                onClick={async () => {
-                  setIsGeneratingPrompts(true);
-                  const result = await regeneratePrompts();
-                  setIsGeneratingPrompts(false);
-                  updateApiPromptsList(result?.prompts);
-                }}
+                onClick={handleRegeneratePrompts}
               />
             </div>
           )}

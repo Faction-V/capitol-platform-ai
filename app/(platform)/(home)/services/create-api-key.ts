@@ -22,6 +22,10 @@ export async function createApiKey({ name, domain }: CreateApiKeysProps) {
     }),
   });
 
+  const responseJson = await response.json();
+
+  console.log("responseJson", responseJson);
+
   if (!response.ok) {
     throw new Error("Failed to create api key");
   }

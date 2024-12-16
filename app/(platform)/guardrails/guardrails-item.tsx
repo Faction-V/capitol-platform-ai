@@ -49,49 +49,56 @@ export const GuardrailsItem = ({
 
   const saveConfig = async () => {
     setIsLoading(true);
-    const result = await createGuardrailsConfig({
-      name: nameValue,
-      description: guardrailDescriptionValue,
-      examples: examplesValue,
-      failCriteria: failCriteriaValue,
-      passCriteria: passCriteriaValue,
-    });
-
-    toast.success("Config was created successfully");
-    setIsLoading(false);
-
-    if (addNewConfig) {
-      addNewConfig(result);
+    try {
+      const result = await createGuardrailsConfig({
+        name: nameValue,
+        description: guardrailDescriptionValue,
+        examples: examplesValue,
+        failCriteria: failCriteriaValue,
+        passCriteria: passCriteriaValue,
+      });
+      toast.success("Config was created successfully");
+      if (addNewConfig) {
+        addNewConfig(result);
+      }
+    } catch (error) {
+      toast.error((error as Error).message);
     }
 
+    setIsLoading(false);
     setIsEditMode(false);
   };
 
   const updateConfig = async () => {
     setIsLoading(true);
-    await updateGuardrailsConfigs({
-      name: nameValue,
-      description: guardrailDescriptionValue,
-      examples: examplesValue,
-      failCriteria: failCriteriaValue,
-      passCriteria: passCriteriaValue,
-      id,
-    });
 
-    if (handleUpdateConfig) {
-      handleUpdateConfig({
-        id,
+    try {
+      await updateGuardrailsConfigs({
         name: nameValue,
-        guardrailDescription: guardrailDescriptionValue,
+        description: guardrailDescriptionValue,
         examples: examplesValue,
         failCriteria: failCriteriaValue,
         passCriteria: passCriteriaValue,
+        id,
       });
+
+      if (handleUpdateConfig) {
+        handleUpdateConfig({
+          id,
+          name: nameValue,
+          guardrailDescription: guardrailDescriptionValue,
+          examples: examplesValue,
+          failCriteria: failCriteriaValue,
+          passCriteria: passCriteriaValue,
+        });
+      }
+      toast.success("Config was updated successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
     }
+
     setIsEditMode(false);
     setIsLoading(false);
-
-    toast.success("Config was updated successfully");
   };
 
   const handleSaveNewConfig = async () => {
@@ -104,9 +111,14 @@ export const GuardrailsItem = ({
 
   const handleDelete = async () => {
     setIsLoading(true);
-    await deleteGuardrailsConfig(id);
-    deleteConfig?.(id);
-    toast.success("Config was deleted successfully");
+
+    try {
+      await deleteGuardrailsConfig(id);
+      deleteConfig?.(id);
+      toast.success("Config was deleted successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
     setIsLoading(false);
   };
 

@@ -27,6 +27,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
       <div className="relative flex flex-col flex-1 min-h-0 pt-5 bg-white border-r border-gray-200">
         <div className="flex-1 px-3 bg-white">
           <Link
+            prefetch={false}
             href="/"
             className={
               pathname === "/" ? selectedLinkClassNames : linkClassNames
@@ -36,6 +37,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
             API keys
           </Link>
           <Link
+            prefetch={false}
             href="/members"
             className={
               pathname === "/members" ? selectedLinkClassNames : linkClassNames
@@ -45,6 +47,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
             Members
           </Link>
           <Link
+            prefetch={false}
             href="/organization"
             className={
               pathname === "/organization"
@@ -56,6 +59,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
             Organization settings
           </Link>
           <Link
+            prefetch={false}
             href="/prompts"
             className={
               pathname === "/prompts" ? selectedLinkClassNames : linkClassNames
@@ -65,6 +69,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
             Suggested prompts
           </Link>
           <Link
+            prefetch={false}
             href="/guardrails"
             className={
               pathname === "/guardrails"
@@ -77,6 +82,7 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
           </Link>
           {isAdmin && (
             <Link
+              prefetch={false}
               href="/admin"
               className={
                 pathname === "/admin" ? selectedLinkClassNames : linkClassNames
