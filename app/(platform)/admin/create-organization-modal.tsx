@@ -5,17 +5,43 @@ import { Modal } from "../../components/modal";
 import { PlusIcon } from "../../icons/plus-icon";
 import { isEmptyString } from "../../utils/is-empty-string";
 import { Input } from "../../components/input";
+import { createOrganization } from "./services/create-organization";
+import { toast } from "react-toastify";
+import { Organization } from "../../types";
 
 interface CreateOrganizationModalProps {
+  updateOrganizationList: (org: Organization) => void;
   setCreateOrgModalOpen: (isModalOpen: boolean) => void;
-  handleCreateOrg: (name: string) => void;
 }
 
 export const CreateOrganizationModal = ({
   setCreateOrgModalOpen,
-  handleCreateOrg,
+  updateOrganizationList,
 }: CreateOrganizationModalProps) => {
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCreateOrg = async (name: string) => {
+    setIsLoading(true);
+
+    try {
+      const result = await createOrganization(name);
+
+      updateOrganizationList({
+        id: result?.orgId,
+        name: result?.name,
+        imageUrl: "",
+      });
+
+      toast.success("Organization was created successfully");
+
+      setCreateOrgModalOpen(false);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+
+    setIsLoading(false);
+  };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (isEmptyString(name)) {
@@ -58,6 +84,7 @@ export const CreateOrganizationModal = ({
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
         <Button
+          isLoading={isLoading}
           disabled={isEmptyString(name)}
           label="Save"
           onClick={() => handleCreateOrg(name)}

@@ -26,21 +26,11 @@ export const OrganizationsList = ({
     setOrgId(id);
   };
 
-  const handleCreateOrg = async (name: string) => {
-    try {
-      const result = await createOrganization(name);
-
-      setOrganizationList([
-        ...organizationList,
-        { id: result?.orgId, name, imageUrl: "" },
-      ]);
-
-      toast.success("Organization was created successfully");
-
-      setCreateOrgModalOpen(false);
-    } catch (error) {
-      toast.error((error as Error).message);
-    }
+  const updateOrganizationList = (org: Organization) => {
+    setOrganizationList([
+      ...organizationList,
+      { id: org?.id, name: org?.name, imageUrl: org?.imageUrl },
+    ]);
   };
 
   return (
@@ -72,8 +62,8 @@ export const OrganizationsList = ({
       </div>
       {isCreateOrgModalOpen && (
         <CreateOrganizationModal
+          updateOrganizationList={updateOrganizationList}
           setCreateOrgModalOpen={setCreateOrgModalOpen}
-          handleCreateOrg={handleCreateOrg}
         />
       )}
       {isAddMemberModalOpen && (
