@@ -10,7 +10,7 @@ interface EditCellProps {
 
 export const EditCell = ({ value, isEditMode, updateValue }: EditCellProps) => {
   return (
-    <td className="p-3 leading-tight">
+    <td className="p-3 leading-tight border-r border-gray-200">
       {isEditMode ? <Textarea onChange={updateValue} value={value} /> : value}
     </td>
   );

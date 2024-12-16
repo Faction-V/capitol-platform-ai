@@ -156,7 +156,7 @@ export const GuardrailsItem = ({
       />
       <td className="p-3">
         {isOwner && (
-          <div className="flex gap-2 items-start">
+          <div className="flex gap-2 items-center justify-center">
             {isEditMode ? (
               <Button
                 isLoading={isLoading}
