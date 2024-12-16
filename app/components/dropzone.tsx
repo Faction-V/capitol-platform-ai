@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { ImageIcon } from "@/app/icons/image-icon";
 import { updateOrgLogo } from "../(platform)/organization/services/upload-org-logo";
+import { toast } from "react-toastify";
 
 interface DropzoneProps {
   setIsLoading: (isLoading: boolean) => void;
@@ -13,10 +14,17 @@ interface DropzoneProps {
 export const Dropzone = ({ handleUpload, setIsLoading }: DropzoneProps) => {
   const onDropAccepted = useCallback(async (acceptedFiles: File[]) => {
     setIsLoading(true);
-    const result = await updateOrgLogo({ file: acceptedFiles[0] });
-    handleUpload(result?.url);
+    try {
+      const result = await updateOrgLogo({ file: acceptedFiles[0] });
+      handleUpload(result?.url);
+      toast.success("Image was uploaded successfully");
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+
     setIsLoading(false);
   }, []);
+
   const { getRootProps, getInputProps } = useDropzone({
     onDropAccepted,
   });

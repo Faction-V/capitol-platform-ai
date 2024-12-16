@@ -6,6 +6,7 @@ import { EditIcon } from "../../icons/edit-icon";
 import { Button } from "../../components/button";
 import { isEmptyString } from "../../utils/is-empty-string";
 import { updateOrgName } from "./services/update-org-name";
+import { toast } from "react-toastify";
 
 interface OrganizationNameProps {
   orgName: string;
@@ -26,8 +27,9 @@ export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
     setIsLoading(true);
     try {
       await updateOrgName({ name: trimmedName });
+      toast.success("Organization was renamed successfully");
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
     }
     setIsEditMode(false);
     setIsLoading(false);
