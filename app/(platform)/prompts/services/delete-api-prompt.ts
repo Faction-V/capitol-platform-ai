@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 interface DeleteApiPromptProps {
   id: string;
@@ -20,6 +21,8 @@ export async function deleteApiPrompt({ id }: DeleteApiPromptProps) {
   if (!response.ok) {
     throw new Error("Failed to delete the prompt");
   }
+
+  revalidateTag("api-prompts");
 
   return await response?.json();
 }

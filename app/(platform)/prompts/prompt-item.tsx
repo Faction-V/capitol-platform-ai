@@ -11,7 +11,6 @@ interface PromptItemProps {
 
 export const PromptItem = ({ prompt, id, handleDelete }: PromptItemProps) => {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-
   return (
     <>
       <div className="flex justify-between items-center mb-2 w-full">

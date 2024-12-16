@@ -50,51 +50,45 @@ export default function GuardrailsList({ configs }: GuardrailsListProps) {
           )}
         </div>
         <hr className="h-px my-4 bg-gray-200 border-0" />
-        {configsList.length === 0 ? (
-          <p className="text-gray-500">
-            There are no Guardrails configs associated with your account.
-          </p>
-        ) : (
-          <table className="table-auto w-full bg-white rounded overflow-hidden">
-            <thead className="bg-gray-200">
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Fail criteria</th>
-                <th>Pass criteria</th>
-                <th>Examples</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {isAddNewConfigState && (
-                <GuardrailsItem
-                  isOwner={user?.isOwner}
-                  key="new-guardrails-config"
-                  examples=""
-                  failCriteria=""
-                  guardrailDescription=""
-                  id=""
-                  name=""
-                  passCriteria=""
-                  isEditModeState={true}
-                  addNewConfig={addNewConfig}
-                  handleUpdateConfig={handleUpdateConfig}
-                />
-              )}
+        <table className="table-auto w-full bg-white rounded overflow-hidden">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="border-r border-gray-300">Name</th>
+              <th className="border-r border-gray-300">Description</th>
+              <th className="border-r border-gray-300">Fail criteria</th>
+              <th className="border-r border-gray-300">Pass criteria</th>
+              <th className="border-r border-gray-300">Examples</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {isAddNewConfigState && (
+              <GuardrailsItem
+                isOwner={user?.isOwner}
+                key="new-guardrails-config"
+                examples=""
+                failCriteria=""
+                guardrailDescription=""
+                id=""
+                name=""
+                passCriteria=""
+                isEditModeState={true}
+                addNewConfig={addNewConfig}
+                handleUpdateConfig={handleUpdateConfig}
+              />
+            )}
 
-              {configsList.map((item) => (
-                <GuardrailsItem
-                  deleteConfig={deleteConfig}
-                  handleUpdateConfig={handleUpdateConfig}
-                  isOwner={user?.isOwner}
-                  key={item?.id}
-                  {...item}
-                />
-              ))}
-            </tbody>
-          </table>
-        )}
+            {configsList.map((item) => (
+              <GuardrailsItem
+                deleteConfig={deleteConfig}
+                handleUpdateConfig={handleUpdateConfig}
+                isOwner={user?.isOwner}
+                key={item?.id}
+                {...item}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

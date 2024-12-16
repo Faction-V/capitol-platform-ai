@@ -29,7 +29,7 @@ export const CreateOrganizationModal = ({
 
       updateOrganizationList({
         id: result?.orgId,
-        name: result?.name,
+        name: name,
         imageUrl: "",
       });
 

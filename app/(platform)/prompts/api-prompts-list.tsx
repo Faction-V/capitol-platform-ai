@@ -13,13 +13,9 @@ import { Prompt } from "../../types";
 
 interface ApiPromptsListProps {
   prompts: Array<Prompt>;
-  setApiPromptsList: (prompts: Array<Prompt>) => void;
 }
 
-export const ApiPromptsList = ({
-  prompts = [],
-  setApiPromptsList,
-}: ApiPromptsListProps) => {
+export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
   const user: User | undefined = useUser();
 
   const [isAddPromptModalOpen, setAddPromptModalOpen] = useState(false);
@@ -30,9 +26,6 @@ export const ApiPromptsList = ({
     try {
       await deleteApiPrompt({ id });
       toast.success("Prompt was deleted successfully");
-      const updatedPrompts = prompts.filter((prompt) => prompt.id !== id);
-
-      setApiPromptsList(updatedPrompts);
     } catch (error) {
       toast.error((error as Error).message);
     }
@@ -46,10 +39,6 @@ export const ApiPromptsList = ({
       const response = await saveApiPromptPropsPrompt({
         prompt: trimmedPrompt,
       });
-
-      const updatedPrompts = [...prompts, response?.prompt];
-
-      setApiPromptsList(updatedPrompts);
 
       toast.success(response?.message);
     } catch (error) {

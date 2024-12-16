@@ -7,6 +7,8 @@ import { Button } from "../../components/button";
 import { isEmptyString } from "../../utils/is-empty-string";
 import { updateOrgName } from "./services/update-org-name";
 import { toast } from "react-toastify";
+import { User } from "../../types";
+import { useUser } from "../UserProvider";
 
 interface OrganizationNameProps {
   orgName: string;
@@ -16,6 +18,7 @@ export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
   const [name, setName] = useState(orgName);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const user: User | undefined = useUser();
 
   const handleSaveName = async () => {
     const trimmedName = name.trim();
@@ -45,11 +48,13 @@ export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
     <div className="flex gap-2 flex-col bg-white border border-gray-200 rounded-lg shadow justify-between items-start p-5 mb-2">
       <div className="flex justify-between w-full">
         <div className="text-gray-900">Organization name</div>
-        <Button
-          label={<EditIcon size={16} />}
-          onClick={() => setIsEditMode(true)}
-          type="secondary"
-        />
+        {user?.isOwner && (
+          <Button
+            label={<EditIcon size={16} />}
+            onClick={() => setIsEditMode(true)}
+            type="secondary"
+          />
+        )}
       </div>
       {isEditMode ? (
         <div className="flex justify-between w-full">

@@ -19,13 +19,11 @@ interface Prompt {
 interface ExamplePromptsListProps {
   prompts: Array<Prompt>;
   setExamplePromptsList: (prompts: Array<Prompt>) => void;
-  updateApiPromptsList: (prompts: Array<Prompt>) => void;
 }
 
 export const ExamplePromptsList = ({
   prompts = [],
   setExamplePromptsList,
-  updateApiPromptsList,
 }: ExamplePromptsListProps) => {
   const user: User | undefined = useUser();
 
@@ -70,8 +68,7 @@ export const ExamplePromptsList = ({
   const handleRegeneratePrompts = async () => {
     setIsGeneratingPrompts(true);
     try {
-      const result = await regeneratePrompts();
-      updateApiPromptsList(result?.prompts);
+      await regeneratePrompts();
       toast.success("Key was created successfully");
     } catch (error) {
       toast.error((error as Error).message);
