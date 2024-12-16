@@ -3,8 +3,6 @@
 import { Button } from "../../components/button";
 import { CreateOrganizationModal } from "./create-organization-modal";
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { createOrganization } from "./services/create-organization";
 import { OrganizationItem } from "./organization-item";
 import { AddMemberModal } from "../../components/add-member-modal";
 import { Organization } from "../../types";
