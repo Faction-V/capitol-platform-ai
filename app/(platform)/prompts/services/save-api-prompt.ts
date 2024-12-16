@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 interface SaveApiPromptProps {
   prompt: string;
@@ -23,6 +24,8 @@ export async function saveApiPromptPropsPrompt({ prompt }: SaveApiPromptProps) {
   if (!response.ok) {
     throw new Error("Failed to save the prompt");
   }
+
+  revalidateTag("api-prompts");
 
   return await response?.json();
 }

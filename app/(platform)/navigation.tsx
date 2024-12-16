@@ -12,9 +12,10 @@ import { ShieldIcon } from "../icons/shield-icon";
 
 interface NavigationProps {
   isAdmin: boolean;
+  isOwner: boolean;
 }
 
-export const Navigation = ({ isAdmin }: NavigationProps) => {
+export const Navigation = ({ isAdmin, isOwner }: NavigationProps) => {
   const pathname = usePathname();
 
   const linkClassNames =
@@ -58,16 +59,20 @@ export const Navigation = ({ isAdmin }: NavigationProps) => {
             <SettingsIcon />
             Organization settings
           </Link>
-          <Link
-            prefetch={false}
-            href="/prompts"
-            className={
-              pathname === "/prompts" ? selectedLinkClassNames : linkClassNames
-            }
-          >
-            <EditIcon size={20} />
-            Suggested prompts
-          </Link>
+          {isOwner && (
+            <Link
+              prefetch={false}
+              href="/prompts"
+              className={
+                pathname === "/prompts"
+                  ? selectedLinkClassNames
+                  : linkClassNames
+              }
+            >
+              <EditIcon size={20} />
+              Suggested prompts
+            </Link>
+          )}
           <Link
             prefetch={false}
             href="/guardrails"
