@@ -44,7 +44,10 @@ export const EditKeyModal = ({
   const createKey = async () => {
     try {
       setIsLoading(true);
-      const result = await createApiKey({ name, domain });
+      const result = await createApiKey({
+        name: name?.trim(),
+        domain: domain?.trim(),
+      });
       setIsLoading(false);
       if (addKey) {
         addKey(result);
@@ -59,10 +62,18 @@ export const EditKeyModal = ({
   const renameKey = async () => {
     try {
       setIsLoading(true);
-      await editApiKey({ id: keyId, name: name, domain });
+      await editApiKey({
+        id: keyId,
+        name: name?.trim(),
+        domain: domain?.trim(),
+      });
       setIsLoading(false);
       if (editKey) {
-        editKey({ id: keyId, name, domain });
+        editKey({
+          id: keyId,
+          name: name?.trim(),
+          domain: domain?.trim(),
+        });
       }
       toast.success("Key was renamed successfully");
     } catch (error) {
@@ -91,7 +102,7 @@ export const EditKeyModal = ({
   };
 
   return (
-    <Modal>
+    <Modal closeModal={() => setIsNameModalOpen(false)}>
       <div className="bg-white px-4 pb-4 pt-5">
         <div className="flex gap-4">
           <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-gray-100">

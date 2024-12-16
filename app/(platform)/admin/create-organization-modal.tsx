@@ -54,7 +54,7 @@ export const CreateOrganizationModal = ({
   };
 
   return (
-    <Modal>
+    <Modal closeModal={() => setCreateOrgModalOpen(false)}>
       <div className="bg-white px-4 pb-4 pt-5">
         <div className="flex gap-4">
           <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-gray-100">
