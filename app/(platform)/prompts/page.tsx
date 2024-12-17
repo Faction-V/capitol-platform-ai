@@ -33,11 +33,9 @@ export default async function PromptsPage() {
   }
 
   return (
-    <>
-      <PromptsContainer
-        apiPrompts={apiPrompts}
-        examplePrompts={examplePrompts?.prompts}
-      />
-    </>
+    <PromptsContainer
+      apiPrompts={apiPrompts}
+      examplePrompts={examplePrompts?.prompts}
+    />
   );
 }
