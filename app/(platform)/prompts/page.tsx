@@ -1,6 +1,7 @@
 import { getExamplesPrompts } from "./services/get-examples-prompts";
 import { getApiPrompts } from "./services/get-api-prompts";
 import { PromptsContainer } from "./prompts-container";
+import Loading from "./loading";
 
 interface Prompt {
   id: string;
@@ -33,11 +34,9 @@ export default async function PromptsPage() {
   }
 
   return (
-    <>
-      <PromptsContainer
-        apiPrompts={apiPrompts}
-        examplePrompts={examplePrompts?.prompts}
-      />
-    </>
+    <PromptsContainer
+      apiPrompts={apiPrompts}
+      examplePrompts={examplePrompts?.prompts}
+    />
   );
 }
