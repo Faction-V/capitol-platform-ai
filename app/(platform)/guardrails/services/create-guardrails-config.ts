@@ -17,6 +17,7 @@ export async function createGuardrailsConfig({
   description,
   passCriteria,
   failCriteria,
+  active,
 }: CreateGuardrailsConfigProps) {
   const cookieStore = await cookies();
 
@@ -33,6 +34,7 @@ export async function createGuardrailsConfig({
       description,
       passCriteria,
       failCriteria,
+      active,
     }),
   });
 

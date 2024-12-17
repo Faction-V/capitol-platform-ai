@@ -101,6 +101,7 @@ export const GuardrailsItem = ({
         failCriteria: failCriteriaValue,
         passCriteria: passCriteriaValue,
         id,
+        active: activeValue,
       });
 
       if (handleUpdateConfig) {
@@ -151,6 +152,7 @@ export const GuardrailsItem = ({
       <td className="p-3">
         <div className="flex items-center justify-center">
           <Checkbox
+            disabled={!isEditMode}
             id={`${id}-checkbox`}
             isChecked={activeValue}
             onClick={() => setActiveValue(!activeValue)}

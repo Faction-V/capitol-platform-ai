@@ -9,6 +9,7 @@ interface updateGuardrailsConfigsProps {
   passCriteria: string;
   failCriteria: string;
   examples: string;
+  active: boolean;
 }
 
 export async function updateGuardrailsConfigs({
@@ -18,8 +19,19 @@ export async function updateGuardrailsConfigs({
   description,
   passCriteria,
   failCriteria,
+  active,
 }: updateGuardrailsConfigsProps) {
   const cookieStore = await cookies();
+
+  console.log("data", {
+    id,
+    name,
+    examples,
+    description,
+    passCriteria,
+    failCriteria,
+    active,
+  });
 
   const proxy = process.env.CLJ_API_BASE_URL;
   const response = await fetch(`${proxy}/configs/guardrails`, {
@@ -35,6 +47,7 @@ export async function updateGuardrailsConfigs({
       description,
       passCriteria,
       failCriteria,
+      active,
     }),
   });
 

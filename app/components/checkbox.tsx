@@ -1,14 +1,22 @@
 interface CheckboxProps {
   id: string;
   isChecked: boolean;
+  disabled: boolean;
   onClick: () => void;
   label?: string;
 }
 
-export const Checkbox = ({ label, id, isChecked, onClick }: CheckboxProps) => {
+export const Checkbox = ({
+  label,
+  id,
+  isChecked,
+  disabled,
+  onClick,
+}: CheckboxProps) => {
   return (
     <div className="flex items-center">
       <input
+        disabled={disabled}
         id={id}
         type="checkbox"
         value=""
