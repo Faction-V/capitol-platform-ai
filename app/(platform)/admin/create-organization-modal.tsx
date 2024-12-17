@@ -37,7 +37,8 @@ export const CreateOrganizationModal = ({
 
       setCreateOrgModalOpen(false);
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to create organization");
     }
 
     setIsLoading(false);

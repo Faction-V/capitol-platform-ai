@@ -44,7 +44,8 @@ export const ExamplePromptsList = ({
 
       toast.success(response?.message);
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to save the prompt");
     }
 
     setIsLoading(false);
@@ -60,7 +61,8 @@ export const ExamplePromptsList = ({
 
       setExamplePromptsList(updatedPrompts);
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to delete the prompt");
     }
     setIsLoading(false);
   };
@@ -69,9 +71,10 @@ export const ExamplePromptsList = ({
     setIsGeneratingPrompts(true);
     try {
       await regeneratePrompts();
-      toast.success("Key was created successfully");
+      toast.success("Prompts were generated successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to generate prompts");
     }
     setIsGeneratingPrompts(false);
   };

@@ -36,7 +36,8 @@ export const MemberItem = ({
       updateMembersAfterRemove(id);
       toast.success("Member was removed from organization successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to remove member");
     }
     setIsLoading(false);
     setIsConfirmationModalOpen(false);

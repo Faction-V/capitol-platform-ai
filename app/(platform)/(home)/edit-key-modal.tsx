@@ -55,7 +55,8 @@ export const EditKeyModal = ({
       toast.success("Key was created successfully");
     } catch (error) {
       setIsLoading(false);
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to create api key");
     }
   };
 
@@ -77,7 +78,8 @@ export const EditKeyModal = ({
       }
       toast.success("Key was renamed successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to rename the api key");
       setIsLoading(false);
     }
   };

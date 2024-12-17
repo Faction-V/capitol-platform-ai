@@ -27,7 +27,8 @@ export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
       await deleteApiPrompt({ id });
       toast.success("Prompt was deleted successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to delete the prompt");
     }
     setIsLoading(false);
   };
@@ -42,7 +43,8 @@ export const ApiPromptsList = ({ prompts = [] }: ApiPromptsListProps) => {
 
       toast.success(response?.message);
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to save the prompt");
     }
     setIsLoading(false);
     setAddPromptModalOpen(false);

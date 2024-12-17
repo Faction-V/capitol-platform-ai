@@ -19,7 +19,8 @@ export const Dropzone = ({ handleUpload, setIsLoading }: DropzoneProps) => {
       handleUpload(result?.url);
       toast.success("Image was uploaded successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to upload organization logo");
     }
 
     setIsLoading(false);

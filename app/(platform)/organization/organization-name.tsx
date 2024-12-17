@@ -32,7 +32,8 @@ export const OrganizationName = ({ orgName }: OrganizationNameProps) => {
       await updateOrgName({ name: trimmedName });
       toast.success("Organization was renamed successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to update the organization name");
     }
     setIsEditMode(false);
     setIsLoading(false);

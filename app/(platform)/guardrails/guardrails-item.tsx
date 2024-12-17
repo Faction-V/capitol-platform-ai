@@ -62,7 +62,8 @@ export const GuardrailsItem = ({
         addNewConfig(result);
       }
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to create Guardrails configs");
     }
 
     setIsLoading(false);
@@ -94,7 +95,8 @@ export const GuardrailsItem = ({
       }
       toast.success("Config was updated successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to update Guardrails configs");
     }
 
     setIsEditMode(false);
@@ -117,7 +119,8 @@ export const GuardrailsItem = ({
       deleteConfig?.(id);
       toast.success("Config was deleted successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to delete Guardrails configs");
     }
     setIsLoading(false);
   };
