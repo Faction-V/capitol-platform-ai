@@ -42,7 +42,8 @@ export const KeyItem = ({
       deleteKey(id);
       toast.success("Key was deleted successfully");
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to delete the api key");
     }
     setIsLoading(false);
   };
