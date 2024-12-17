@@ -1,4 +1,4 @@
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { EditIcon } from "../../icons/edit-icon";
 import { TrashIcon } from "../../icons/trash-icon";
@@ -9,6 +9,7 @@ import { EditCell } from "./edit-cell";
 import { createGuardrailsConfig } from "./services/create-guardrails-config";
 import { updateGuardrailsConfigs } from "./services/update-guardrails-config";
 import { deleteGuardrailsConfig } from "./services/delete-guardrails-config";
+import { Checkbox } from "../../components/checkbox";
 
 interface GuardrailsItem extends GuardrailsConfig {
   isOwner: boolean | undefined;
@@ -30,6 +31,7 @@ export const GuardrailsItem = ({
   addNewConfig,
   handleUpdateConfig,
   deleteConfig,
+  active,
 }: GuardrailsItem) => {
   const [isEditMode, setIsEditMode] = useState(isEditModeState);
   const [nameValue, setNameValue] = useState(name);
@@ -38,8 +40,25 @@ export const GuardrailsItem = ({
   const [examplesValue, setExamplesValue] = useState(examples);
   const [failCriteriaValue, setFailCriteriaValue] = useState(failCriteria);
   const [passCriteriaValue, setPassCriteriaValue] = useState(passCriteria);
+  const [activeValue, setActiveValue] = useState(active);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const isDisabled = useMemo(() => {
+    return (
+      !nameValue ||
+      !guardrailDescriptionValue ||
+      !examplesValue ||
+      !failCriteriaValue ||
+      !passCriteriaValue
+    );
+  }, [
+    nameValue,
+    guardrailDescriptionValue,
+    examplesValue,
+    failCriteriaValue,
+    passCriteriaValue,
+  ]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -51,6 +70,7 @@ export const GuardrailsItem = ({
     setIsLoading(true);
     try {
       const result = await createGuardrailsConfig({
+        active: activeValue,
         name: nameValue,
         description: guardrailDescriptionValue,
         examples: examplesValue,
@@ -91,6 +111,7 @@ export const GuardrailsItem = ({
           examples: examplesValue,
           failCriteria: failCriteriaValue,
           passCriteria: passCriteriaValue,
+          active: activeValue,
         });
       }
       toast.success("Config was updated successfully");
@@ -127,6 +148,15 @@ export const GuardrailsItem = ({
 
   return (
     <tr className="bg-white border-b last:border-none">
+      <td className="p-3">
+        <div className="flex items-center justify-center">
+          <Checkbox
+            id={`${id}-checkbox`}
+            isChecked={activeValue}
+            onClick={() => setActiveValue(!activeValue)}
+          />
+        </div>
+      </td>
       <EditCell
         value={nameValue}
         isEditMode={isEditMode}
@@ -162,6 +192,7 @@ export const GuardrailsItem = ({
           <div className="flex gap-2 items-center justify-center">
             {isEditMode ? (
               <Button
+                disabled={isDisabled}
                 isLoading={isLoading}
                 label="Save"
                 onClick={handleSaveNewConfig}

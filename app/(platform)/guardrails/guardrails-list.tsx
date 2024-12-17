@@ -53,6 +53,7 @@ export default function GuardrailsList({ configs }: GuardrailsListProps) {
         <table className="table-auto w-full bg-white rounded overflow-hidden">
           <thead className="bg-gray-200">
             <tr>
+              <th className="border-r border-gray-300">Enabled</th>
               <th className="border-r border-gray-300">Name</th>
               <th className="border-r border-gray-300">Description</th>
               <th className="border-r border-gray-300">Fail criteria</th>
@@ -71,6 +72,7 @@ export default function GuardrailsList({ configs }: GuardrailsListProps) {
                 guardrailDescription=""
                 id=""
                 name=""
+                active={false}
                 passCriteria=""
                 isEditModeState={true}
                 addNewConfig={addNewConfig}

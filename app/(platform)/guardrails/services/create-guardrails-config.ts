@@ -8,6 +8,7 @@ interface CreateGuardrailsConfigProps {
   passCriteria: string;
   failCriteria: string;
   examples: string;
+  active: boolean;
 }
 
 export async function createGuardrailsConfig({
