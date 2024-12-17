@@ -40,7 +40,8 @@ export const AddMemberModal = ({
         toast.warning(response?.message);
       }
     } catch (error) {
-      toast.error((error as Error).message);
+      console.log(error);
+      toast.error("Failed to send invite");
     }
     setAddUserModalOpen(false);
     setIsLoading(false);

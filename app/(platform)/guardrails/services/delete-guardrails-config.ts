@@ -6,7 +6,7 @@ export async function deleteGuardrailsConfig(id: string) {
   const cookieStore = await cookies();
 
   const proxy = process.env.CLJ_API_BASE_URL;
-  const response = await fetch(`${proxy}/configs/guardrails?id=${id}`, {
+  const response = await fetch(`${proxy}/configs/guardrails/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

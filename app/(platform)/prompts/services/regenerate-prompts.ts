@@ -15,7 +15,7 @@ export async function regeneratePrompts() {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to regenerate prompts");
+    throw new Error("Failed to generate prompts");
   }
 
   revalidateTag("api-prompts");
