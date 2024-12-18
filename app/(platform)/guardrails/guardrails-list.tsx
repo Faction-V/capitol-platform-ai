@@ -38,8 +38,6 @@ export default function GuardrailsList({ configs }: GuardrailsListProps) {
     setConfigsList(updatedConfigs);
   };
 
-  toast.success("Failed to rename the api key");
-
   return (
     <div className="mb-4 w-full">
       <div className="flow-root">
