@@ -6,7 +6,7 @@ import { DeleteConfirmationModal } from "../../components/delete-confirmation-mo
 import { toast } from "react-toastify";
 import { removeMember } from "./services/remove-member";
 import { isEmptyString } from "../../utils/is-empty-string";
-import { colors } from "./colors";
+import { colors } from "../../components/colors";
 
 interface MemberItemProps extends Member {
   isOwner: boolean | undefined;
