@@ -47,6 +47,8 @@ export async function middleware(request: NextRequest) {
 
   const user = await data.json();
 
+  console.log(user);
+
   const userData = {
     id: user?.id,
     firstName: user?.firstName,
@@ -55,6 +57,7 @@ export async function middleware(request: NextRequest) {
     orgName: user?.orgInfo?.name,
     orgLogo: user?.orgInfo?.imageUrl,
     isAdmin: user?.typeName === "Admin",
+    email: user?.email,
   };
 
   // If the user is authenticated, continue as normal

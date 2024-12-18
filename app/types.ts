@@ -14,6 +14,7 @@ export interface User {
   isAdmin: boolean;
   orgName: string;
   orgLogo: string;
+  email: string;
 }
 
 export interface Member {

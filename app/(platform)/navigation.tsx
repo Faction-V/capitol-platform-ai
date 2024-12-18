@@ -9,115 +9,154 @@ import { SettingsIcon } from "../icons/settings-icon";
 import { EditIcon } from "../icons/edit-icon";
 import { CodeBrowserIcon } from "../icons/code-browser-icon";
 import { ShieldIcon } from "../icons/shield-icon";
+import { CapitolIcon } from "../icons/capitol-icon";
+import { SignOutButton } from "./sign-out-button";
+import { User } from "../types";
+import { Avatar } from "../components/avatar";
 
 interface NavigationProps {
-  isAdmin: boolean;
-  isOwner: boolean;
+  user: User;
 }
 
-export const Navigation = ({ isAdmin, isOwner }: NavigationProps) => {
+export const Navigation = ({ user }: NavigationProps) => {
   const pathname = usePathname();
 
   const linkClassNames =
-    "flex gap-2 my-0.5 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group";
+    "flex gap-2 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-zinc-100 group";
   const selectedLinkClassNames =
-    "flex gap-2 my-0.5 bg-gray-100 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group";
+    "flex gap-2 bg-zinc-100 items-center p-2 text-base text-gray-900 rounded-lg hover:bg-zinc-100 group";
 
   return (
-    <aside className="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 transition-width">
-      <div className="relative flex flex-col flex-1 min-h-0 pt-5 bg-white border-r border-gray-200">
-        <div className="flex-1 px-3 bg-white">
-          <Link
-            prefetch={false}
-            href="/"
-            className={
-              pathname === "/" ? selectedLinkClassNames : linkClassNames
-            }
+    <aside className="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full font-normal duration-75 transition-width">
+      <div className="relative flex flex-col flex-1 min-h-0 bg-zinc-50 border-r border-gray-200 p-2">
+        <div
+          data-sidebar="sidebar"
+          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow"
+        >
+          <div data-sidebar="header" className="flex gap-2 p-2 items-center">
+            {user?.orgLogo ? (
+              <img
+                src={user?.orgLogo}
+                alt=""
+                className="h-10 w-10 object-cover rounded-md"
+              />
+            ) : (
+              <CapitolIcon />
+            )}
+
+            <span className="font-semibold">{user?.orgName}</span>
+          </div>
+          <div
+            data-sidebar="content"
+            className="flex min-h-0 flex-1 flex-col gap-1.5 overflow-auto pt-2"
           >
-            <KeyIcon size={20} />
-            API keys
-          </Link>
-          <Link
-            prefetch={false}
-            href="/members"
-            className={
-              pathname === "/members" ? selectedLinkClassNames : linkClassNames
-            }
-          >
-            <UsersIcon size={20} />
-            Members
-          </Link>
-          <Link
-            prefetch={false}
-            href="/organization"
-            className={
-              pathname === "/organization"
-                ? selectedLinkClassNames
-                : linkClassNames
-            }
-          >
-            <SettingsIcon />
-            Organization settings
-          </Link>
-          {isOwner && (
             <Link
               prefetch={false}
-              href="/prompts"
+              href="/"
               className={
-                pathname === "/prompts"
+                pathname === "/" ? selectedLinkClassNames : linkClassNames
+              }
+            >
+              <KeyIcon size={20} />
+              API keys
+            </Link>
+            <Link
+              prefetch={false}
+              href="/members"
+              className={
+                pathname === "/members"
                   ? selectedLinkClassNames
                   : linkClassNames
               }
             >
-              <EditIcon size={20} />
-              Suggested prompts
+              <UsersIcon size={20} />
+              Members
             </Link>
-          )}
-          <Link
-            prefetch={false}
-            href="/guardrails"
-            className={
-              pathname === "/guardrails"
-                ? selectedLinkClassNames
-                : linkClassNames
-            }
-          >
-            <ShieldIcon size={20} />
-            Guardrails
-          </Link>
-          {isAdmin && (
             <Link
               prefetch={false}
-              href="/admin"
+              href="/organization"
               className={
-                pathname === "/admin" ? selectedLinkClassNames : linkClassNames
+                pathname === "/organization"
+                  ? selectedLinkClassNames
+                  : linkClassNames
               }
             >
-              <CodeBrowserIcon size={20} />
-              Admin panel
+              <SettingsIcon />
+              Organization settings
             </Link>
-          )}
-          <div className="h-px my-4 bg-gray-200" />
-          <a
-            rel="noopener noreferrer"
-            href="https://api.capitol.ai/"
-            target="_blank"
-            className={linkClassNames}
-          >
-            <span className="gap-1 flex">
-              API docs <ExternalLinkIcon size={12} />
-            </span>
-          </a>
-          <a
-            rel="noopener noreferrer"
-            href="https://www.npmjs.com/package/@capitol.ai/react"
-            target="_blank"
-            className={linkClassNames}
-          >
-            <span className="gap-1 flex">
-              NPM package <ExternalLinkIcon size={12} />
-            </span>
-          </a>
+            {user?.isOwner && (
+              <Link
+                prefetch={false}
+                href="/prompts"
+                className={
+                  pathname === "/prompts"
+                    ? selectedLinkClassNames
+                    : linkClassNames
+                }
+              >
+                <EditIcon size={20} />
+                Suggested prompts
+              </Link>
+            )}
+            <Link
+              prefetch={false}
+              href="/guardrails"
+              className={
+                pathname === "/guardrails"
+                  ? selectedLinkClassNames
+                  : linkClassNames
+              }
+            >
+              <ShieldIcon size={20} />
+              Guardrails
+            </Link>
+            {user?.isAdmin && (
+              <Link
+                prefetch={false}
+                href="/admin"
+                className={
+                  pathname === "/admin"
+                    ? selectedLinkClassNames
+                    : linkClassNames
+                }
+              >
+                <CodeBrowserIcon size={20} />
+                Admin panel
+              </Link>
+            )}
+            <div className="h-px my-2 bg-gray-200" />
+            <a
+              rel="noopener noreferrer"
+              href="https://api.capitol.ai/"
+              target="_blank"
+              className={linkClassNames}
+            >
+              <span className="gap-1 flex">
+                API docs <ExternalLinkIcon size={12} />
+              </span>
+            </a>
+            <a
+              rel="noopener noreferrer"
+              href="https://www.npmjs.com/package/@capitol.ai/react"
+              target="_blank"
+              className={linkClassNames}
+            >
+              <span className="gap-1 flex">
+                NPM package <ExternalLinkIcon size={12} />
+              </span>
+            </a>
+          </div>
+
+          <div data-sidebar="footer" className="flex gap-2 p-2 items-center">
+            <Avatar firstName={user?.firstName} lastName={user?.lastName} />
+            <div className="flex flex-col text-left text-sm leading-tight">
+              <span className="truncate font-semibold">
+                {user?.firstName} {user?.lastName}
+              </span>
+              <span className="truncate text-xs">{user?.email}</span>
+            </div>
+            <SignOutButton />
+          </div>
         </div>
       </div>
     </aside>
