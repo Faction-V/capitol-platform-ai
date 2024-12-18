@@ -5,7 +5,6 @@ import { Button } from "@/app/components/button";
 import { GuardrailsConfig, User } from "../../types";
 import { useUser } from "../UserProvider";
 import { GuardrailsItem } from "./guardrails-item";
-import { toast } from "react-toastify";
 
 interface GuardrailsListProps {
   configs: Array<GuardrailsConfig>;
