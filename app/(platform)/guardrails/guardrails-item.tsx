@@ -148,8 +148,8 @@ export const GuardrailsItem = ({
   };
 
   return (
-    <tr className="bg-white border-b last:border-none">
-      <td className="p-3">
+    <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+      <td className="p-2 align-middle">
         <div className="flex items-center justify-center">
           <Checkbox
             disabled={!isEditMode}
