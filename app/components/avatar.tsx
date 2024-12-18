@@ -10,7 +10,7 @@ export const Avatar = ({ firstName, lastName }: AvatarProps) => {
 
   return (
     <div
-      className={`w-8 h-8 rounded-lg ${colorClassname} flex items-center justify-center self-center`}
+      className={`w-8 h-8 rounded-lg ${colorClassname} flex items-center justify-center self-center text-sm`}
     >
       {firstName[0].toUpperCase()}
       {lastName[0].toUpperCase()}
