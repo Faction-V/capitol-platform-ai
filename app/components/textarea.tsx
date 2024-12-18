@@ -23,7 +23,7 @@ export const Textarea = ({
         onChange(event.target.value)
       }
       onKeyDown={(event) => onKeyDown && onKeyDown(event)}
-      className={`${customClassName} bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full px-4 py-2.5`}
+      className={`${customClassName} flex h-9 w-full rounded-md border border-zinc-200 bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
     />
   );
 };
