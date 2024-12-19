@@ -37,6 +37,7 @@ export interface Organization {
 
 export interface GuardrailsConfig {
   id: string;
+  active: boolean;
   name: string;
   guardrailDescription: string;
   passCriteria: string;

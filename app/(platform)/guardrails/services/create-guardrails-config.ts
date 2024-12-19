@@ -8,6 +8,7 @@ interface CreateGuardrailsConfigProps {
   passCriteria: string;
   failCriteria: string;
   examples: string;
+  active: boolean;
 }
 
 export async function createGuardrailsConfig({
@@ -16,6 +17,7 @@ export async function createGuardrailsConfig({
   description,
   passCriteria,
   failCriteria,
+  active,
 }: CreateGuardrailsConfigProps) {
   const cookieStore = await cookies();
 
@@ -32,6 +34,7 @@ export async function createGuardrailsConfig({
       description,
       passCriteria,
       failCriteria,
+      active,
     }),
   });
 

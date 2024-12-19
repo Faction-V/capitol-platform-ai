@@ -47,8 +47,6 @@ export async function middleware(request: NextRequest) {
 
   const user = await data.json();
 
-  console.log(user);
-
   const userData = {
     id: user?.id,
     firstName: user?.firstName,

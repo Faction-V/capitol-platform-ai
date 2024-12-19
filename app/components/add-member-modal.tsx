@@ -6,6 +6,7 @@ import { Modal } from "./modal";
 import { UserPlusIcon } from "../icons/user-plus-icon";
 import { isEmptyString } from "../utils/is-empty-string";
 import { sendInvite } from "../(platform)/members/services/send-invite";
+import { RadioButton } from "./radio-button";
 
 interface AddUserModalProps {
   orgId?: string | null;
@@ -60,6 +61,7 @@ export const AddMemberModal = ({
       handleSendInvite();
     }
   };
+  console.log("role", role);
 
   return (
     <Modal closeModal={() => setAddUserModalOpen(false)}>
@@ -96,40 +98,20 @@ export const AddMemberModal = ({
               </div>
               {canChooseRole && (
                 <div className="mb-3">
-                  <div className="flex items-center mb-4">
-                    <input
-                      defaultChecked={role === "owner"}
-                      onClick={() => setRole("owner")}
-                      id="default-radio-1"
-                      type="radio"
-                      value="owner"
-                      name="default-radio"
-                      className="accent-primary-700 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 cursor-pointer"
-                    />
-                    <label
-                      htmlFor="default-radio-1"
-                      className="ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                    >
-                      Owner
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      onClick={() => setRole("member")}
-                      defaultChecked={role === "member"}
-                      id="default-radio-2"
-                      type="radio"
-                      value="member"
-                      name="default-radio"
-                      className="accent-primary-700 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 cursor-pointer"
-                    />
-                    <label
-                      htmlFor="default-radio-2"
-                      className="ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                    >
-                      Member
-                    </label>
-                  </div>
+                  <RadioButton
+                    id="radio-button-owner"
+                    checked={role === "owner"}
+                    value="owner"
+                    label="Owner"
+                    onChange={() => setRole("owner")}
+                  />
+                  <RadioButton
+                    id="radio-button-member"
+                    checked={role === "member"}
+                    value="member"
+                    label="Member"
+                    onChange={() => setRole("member")}
+                  />
                 </div>
               )}
             </div>

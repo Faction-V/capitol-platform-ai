@@ -1,4 +1,10 @@
-export const SignOutIcon = ({ size = 24 }: { size?: number }) => (
+export const CircleCheckIcon = ({
+  size = 24,
+  className = "",
+}: {
+  size?: number;
+  className?: string;
+}) => (
   <div
     style={{
       height: size,
@@ -11,10 +17,10 @@ export const SignOutIcon = ({ size = 24 }: { size?: number }) => (
       height="24"
       viewBox="0 0 24 24"
       fill="none"
+      className={className}
     >
       <path
-        d="M18 8L22 12M22 12L18 16M22 12H9M15 4.20404C13.7252 3.43827 12.2452 3 10.6667 3C5.8802 3 2 7.02944 2 12C2 16.9706 5.8802 21 10.6667 21C12.2452 21 13.7252 20.5617 15 19.796"
-        stroke="#242329"
+        d="M7.5 12L10.5 15L16.5 9M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
