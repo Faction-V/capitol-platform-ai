@@ -5,6 +5,7 @@ import { getOtp } from "@/app/login/services/get-otp";
 import { validateOtp } from "@/app/login/services/validate-otp";
 import { Input } from "@/app/components/input";
 import { Button } from "@/app/components/button";
+import { toast } from "react-toastify";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -17,18 +18,33 @@ export const LoginForm = () => {
 
   const handleButtonClick = async () => {
     if (isOtpVisible) {
+      // Validate OTP
       if (!email || !code) {
         return;
       }
       setIsLoading(true);
-      await validateOtp({ email, code });
-      router.push("/");
+
+      try {
+        await validateOtp({ email, code });
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        toast.error("Something went wrong. Please try again");
+      }
     } else {
+      // Get OTP
       if (!email) {
         return;
       }
       setIsLoading(true);
-      await getOtp(email);
+      try {
+        await getOtp(email);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        toast.error("Something went wrong. Please try again");
+      }
       setIsLoading(false);
       setIsOtpVisible(true);
     }

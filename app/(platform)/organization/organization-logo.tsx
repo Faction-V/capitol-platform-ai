@@ -7,6 +7,7 @@ import { Button } from "../../components/button";
 import { EditIcon } from "../../icons/edit-icon";
 import { User } from "../../types";
 import { useUser } from "../UserProvider";
+import { CapitolIcon } from "../../icons/capitol-icon";
 
 interface OrganizationLogoProps {
   logoUrl: string;
@@ -38,8 +39,10 @@ export const OrganizationLogo = ({ logoUrl }: OrganizationLogoProps) => {
       </div>
       {isEditMode ? (
         <Dropzone handleUpload={handleUpload} setIsLoading={setIsLoading} />
-      ) : (
+      ) : image ? (
         <img src={image} alt="" className="h-10 w-10 object-cover rounded-md" />
+      ) : (
+        <CapitolIcon />
       )}
     </div>
   );
