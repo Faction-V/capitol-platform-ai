@@ -5,7 +5,6 @@ import { getOtp } from "@/app/login/services/get-otp";
 import { validateOtp } from "@/app/login/services/validate-otp";
 import { Input } from "@/app/components/input";
 import { Button } from "@/app/components/button";
-import { updateOrgLogo } from "../(platform)/organization/services/upload-org-logo";
 import { toast } from "react-toastify";
 
 export const LoginForm = () => {
